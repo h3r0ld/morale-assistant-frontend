@@ -33,11 +33,6 @@
             "scripts": []
           },
           "configurations": {
-            "ci": {
-              "watch": false,
-              "progress": false,
-              "browsers": "ChromeHeadlessCI"
-            },
             "production": {
               "fileReplacements": [
                 {
@@ -101,6 +96,13 @@
               "src/styles.scss"
             ],
             "scripts": []
+          },
+          "configurations": {
+            "ci": {
+              "watch": false,
+              "progress": false,
+              "browsers": "ChromeHeadlessCI"
+            }
           }
         },
         "lint": {
@@ -125,6 +127,11 @@
           "configurations": {
             "production": {
               "devServerTarget": "morale-assistant-frontend:serve:production"
+            },
+            "ci": {
+              "watch": false,
+              "progress": false,
+              "browsers": "ChromeHeadlessCI"
             }
           }
         }
