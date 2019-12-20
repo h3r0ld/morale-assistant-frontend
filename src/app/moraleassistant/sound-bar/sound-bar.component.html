@@ -1,0 +1,20 @@
+<div class="sound-bar" fxLayout="row" fxLayoutAlign="space-between center">
+    <div>
+        {{currentTime | timeFormatter}} / {{duration | timeFormatter}}
+    </div>
+    <div fxLayoutGap="5px">
+        <button mat-icon-button *ngIf="isStopped() || isPaused()" (click)="play()">
+            <mat-icon aria-hidden="false" aria-label="Play" aria->play_arrow</mat-icon>
+        </button>
+        <button mat-icon-button *ngIf="isPlaying()" (click)="pause()">
+            <mat-icon aria-hidden="false" aria-label="Stop">pause</mat-icon>
+        </button>
+        <button mat-icon-button (click)="stop()">
+            <mat-icon  aria-hidden="false" aria-label="Stop">stop</mat-icon>
+        </button>
+        <button mat-icon-button (click)="replay()">
+            <mat-icon aria-hidden="false" aria-label="Replay">replay</mat-icon>
+        </button>
+        <mat-checkbox [checked]="autoplay" (change)="autoplay = !autoplay">Autoplay</mat-checkbox>
+    </div>
+</div>

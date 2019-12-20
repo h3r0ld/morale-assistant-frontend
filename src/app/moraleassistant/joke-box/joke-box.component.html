@@ -1,0 +1,17 @@
+<div class="joke-box">
+    <mat-card class="joke-box-card">
+        <mat-card-content>
+            <div class="joke-text">{{joke.text}}</div>
+        </mat-card-content>
+        <mat-card-actions fxLayout="row" fxLayoutAlign="space-between center">
+            <app-sound-bar fxFlex="50" [sound]="joke.soundFile" (soundEnded)="onSoundEnded()"></app-sound-bar>
+            <div fxFlex="50" fxLayoutAlign="space-between">
+                <mat-button-toggle-group [value]=joke.language>
+                    <mat-button-toggle [value]=Language.HU>hun</mat-button-toggle>
+                    <mat-button-toggle [value]=Language.EN>eng</mat-button-toggle>
+                </mat-button-toggle-group>
+                <button mat-raised-button color="primary" (click)="getNextJoke()">Next One {{timeLeft > 0 ? 'in ' + timeLeft + ' ' : ''}}<mat-icon aria-hidden="false">sentiment_satisfied_alt</mat-icon></button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</div>
