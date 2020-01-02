@@ -2,11 +2,11 @@ import { Language } from './language';
 
 export class Joke {
     id: number;
-    text: String;
+    text: string;
     soundFile: any;
     language: Language;
 
-    constructor(text: String, language: Language) {
+    constructor(text: string, language: Language) {
         this.text = text;
         this.language = language;
     }

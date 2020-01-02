@@ -3,8 +3,9 @@
         <mat-card-content>
             <div class="joke-text">{{joke.text}}</div>
         </mat-card-content>
+        <mat-progress-bar mode="determinate" [value]="getProgress()"></mat-progress-bar>
         <mat-card-actions fxLayout="row" fxLayoutAlign="space-between center">
-            <app-sound-bar fxFlex="50" [sound]="joke.soundFile" (soundEnded)="onSoundEnded()"></app-sound-bar>
+            <app-sound-bar fxFlex="50" [sound]="joke.soundFile" (soundEnded)="onSoundEnded()" (soundStarted)="onSoundStarted()"></app-sound-bar>
             <div fxFlex="50" fxLayoutAlign="space-between">
                 <mat-button-toggle-group [value]=joke.language>
                     <mat-button-toggle [value]=Language.HU>hun</mat-button-toggle>

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { TimeFormatterPipe } from './pipes/time-formatter.pipe';
-import { JokeService } from './service/joke.service';
 
 @NgModule({
     declarations: [
@@ -9,5 +8,5 @@ import { JokeService } from './service/joke.service';
     exports: [
         TimeFormatterPipe
     ]
-  })
-  export class CommonModule { }
+})
+export class CommonModule { }

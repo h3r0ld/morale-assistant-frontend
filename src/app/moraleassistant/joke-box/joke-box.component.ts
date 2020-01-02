@@ -16,7 +16,8 @@ export class JokeBoxComponent implements OnInit {
 
   public autoplay: boolean;
   public timeLeft: number;
-  
+  public maxTimeLeft = 10;
+
   @ViewChild(SoundBarComponent, null) soundBar: SoundBarComponent;
 
   private countdown: any;
@@ -24,13 +25,13 @@ export class JokeBoxComponent implements OnInit {
   constructor(private jokeService: JokeService) { }
 
   ngOnInit() {
-    this.joke = new Joke('Hello, this is a very very funny joke, you should laugh very intensively. Hello, this is a very very funny joke, you should laugh very intensively. Hello, this is a very very funny joke, you should laugh very intensively. Hello, this is a very very funny joke, you should laugh very intensively. Hello, this is a very very funny joke, you should laugh very intensively. Hello, this is a very very funny joke, you should laugh very intensively. Hello, this is a very very funny joke, you should laugh very intensively. Hello, this is a very very funny joke, you should laugh very intensively. Hello, this is a very very funny joke, you should laugh very intensively. ', Language.HU);
+    this.joke = new Joke('Hello, this is a very very funny joke, you should laugh very intensively.', Language.HU);
     this.joke.soundFile = new Audio('../../../assets/audio/short_sound.mp3');
   }
 
   onSoundEnded() {
     console.log('Sound ended, getting next joke... ');
-    this.timeLeft = 10;
+    this.timeLeft = this.maxTimeLeft;
     this.countdown = setInterval(() => {
       this.timeLeft--;
 
@@ -38,6 +39,10 @@ export class JokeBoxComponent implements OnInit {
         this.getNextJoke();
       }
     }, 1000);
+  }
+
+  onSoundStarted() {
+    this.stopCountdown();
   }
 
   getNextJoke() {
@@ -49,7 +54,7 @@ export class JokeBoxComponent implements OnInit {
         this.joke = new Joke(data.joke, Language.EN);
         this.joke.soundFile = new Audio('../../../assets/audio/short_sound.mp3');
       } else {
-        this.joke = new Joke(`${data.setup} ..... ${data.delivery}`, Language.EN);
+        this.joke = new Joke(`${data.setup} ${data.delivery}`, Language.EN);
         this.joke.soundFile = new Audio('../../../assets/audio/short_sound.mp3');
       }
 
@@ -57,12 +62,20 @@ export class JokeBoxComponent implements OnInit {
         this.soundBar.replay();
       } else {
         console.log('Autoplay not set! ', this.autoplay);
+        this.soundBar.stop();
       }
     });
   }
 
+  getProgress() {
+    return (this.soundBar.isPlaying() || this.soundBar.isPaused()
+    ? Math.floor(this.soundBar.currentTime) / this.soundBar.duration : this.timeLeft / this.maxTimeLeft) * 100;
+  }
+
   private stopCountdown() {
+    console.log('Stopping countdown...');
     if (this.countdown) {
+      console.log('Clearing countdown interval...');
       clearInterval(this.countdown);
     }
     this.timeLeft = 0;

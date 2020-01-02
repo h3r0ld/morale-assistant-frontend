@@ -10,6 +10,7 @@ import { PlayState } from 'src/app/common/model/play-state';
 export class SoundBarComponent implements OnInit, OnChanges {
   @Input() sound: HTMLAudioElement;
   @Output() soundEnded = new EventEmitter();
+  @Output() soundStarted = new EventEmitter();
 
   private state: PlayState;
 
@@ -20,33 +21,27 @@ export class SoundBarComponent implements OnInit, OnChanges {
   constructor() {
     this.currentTime = 0;
     this.duration = 0;
-    this.state = PlayState.STOPPED;
     this.autoplay = false;
+    this.state = PlayState.STOPPED;
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('Changed!');
-
+  ngOnChanges() {
     this.sound.load();
 
     this.sound.ontimeupdate = () => {
-      console.log('Setting currentTime to: ', this.sound.currentTime);
       this.currentTime = this.sound.currentTime;
     };
 
     this.sound.onloadedmetadata = () => {
-      console.log('Setting duration to: ', this.sound.duration);
       this.duration = this.sound.duration;
-    }
+    };
 
     this.sound.onended = () => {
       this.state = PlayState.STOPPED;
-      console.log('Sending sound ended event!');
       this.soundEnded.emit();
-    }
+    };
 
     if (this.autoplay) {
       this.play();
@@ -70,6 +65,7 @@ export class SoundBarComponent implements OnInit, OnChanges {
     if (this.sound) {
       this.sound.play();
       this.state = PlayState.PLAYING;
+      this.soundStarted.emit();
     }
   }
 
