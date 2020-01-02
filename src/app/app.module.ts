@@ -8,27 +8,25 @@ import { SoundBarComponent } from './moraleassistant/sound-bar/sound-bar.compone
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MaterialModule } from './common/material/material.module';
 import { CommonModule } from './common/common.module';
-import { JokeService } from './common/service/joke.service';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-
-
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+import { MoraleAssistantModule } from './moraleassistant/morale-assistant.module';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    JokeBoxComponent,
-    SoundBarComponent
-  ],
+  declarations: [ AppComponent ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
     HttpClientModule,
+    RouterModule,
+    AppRoutingModule,
 
     MaterialModule,
-    CommonModule
+    CommonModule,
+    MoraleAssistantModule,
   ],
-  providers: [JokeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
