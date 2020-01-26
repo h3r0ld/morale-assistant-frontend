@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { PlayState } from 'src/app/common/model/play-state';
+import { SoundBarOptions } from './sound-bar-options';
 
 
 @Component({
@@ -9,6 +10,8 @@ import { PlayState } from 'src/app/common/model/play-state';
 })
 export class SoundBarComponent implements OnInit, OnChanges {
   @Input() sound: HTMLAudioElement;
+  @Input() soundBarOptions: SoundBarOptions;
+  
   @Output() soundEnded = new EventEmitter();
   @Output() soundStarted = new EventEmitter();
 

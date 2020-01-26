@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { MoraleAssistantModule } from './moraleassistant/morale-assistant.module';
 import { AppRoutingModule } from './app-routing.module';
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   declarations: [ AppComponent ],
@@ -26,6 +27,7 @@ import { AppRoutingModule } from './app-routing.module';
     MaterialModule,
     CommonModule,
     MoraleAssistantModule,
+    AdminModule
   ],
   bootstrap: [AppComponent]
 })
