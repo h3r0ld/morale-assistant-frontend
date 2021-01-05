@@ -4,7 +4,8 @@ import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../common/material/material.module';
 import { HomePageComponent } from './home-page/home-page.component';
 import { AdminRoutingModule } from './admin-routing.module';
-import { CommonModule } from '../common/common.module';
+import { MoraleAssistantCommonModule } from '../common/moraleassistant-common.module';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
     declarations: [
@@ -12,9 +13,11 @@ import { CommonModule } from '../common/common.module';
         HomePageComponent,
     ],
     imports: [
+        CommonModule,
         RouterModule,
         MaterialModule,
-        CommonModule,
+
+        MoraleAssistantCommonModule,
         AdminRoutingModule,
     ],
     exports: [

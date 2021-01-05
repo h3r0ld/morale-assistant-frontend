@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Joke } from 'src/app/common/model/joke';
 import { Language } from 'src/app/common/model/language';
 import { JokeService } from 'src/app/common/service/joke.service';
-import { SoundBarComponent } from '../sound-bar/sound-bar.component';
+import { SoundBarComponent } from '../../common/component/sound-bar/sound-bar.component';
 
 @Component({
   selector: 'app-joke-box',

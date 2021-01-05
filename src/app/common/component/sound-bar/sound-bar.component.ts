@@ -10,7 +10,7 @@ import { SoundBarOptions } from './sound-bar-options';
 })
 export class SoundBarComponent implements OnInit, OnChanges {
   @Input() sound: HTMLAudioElement;
-  @Input() soundBarOptions: SoundBarOptions;
+  @Input() options: SoundBarOptions;
   
   @Output() soundEnded = new EventEmitter();
   @Output() soundStarted = new EventEmitter();
@@ -31,6 +31,10 @@ export class SoundBarComponent implements OnInit, OnChanges {
   ngOnInit() { }
 
   ngOnChanges() {
+    if (!this.sound) {
+      return;
+    }
+
     this.sound.load();
 
     this.sound.ontimeupdate = () => {
