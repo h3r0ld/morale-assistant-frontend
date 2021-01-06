@@ -10,7 +10,7 @@ export class JokeService {
     constructor(private httpClient: HttpClient) { }
 
     getNextJoke(language: Language): Observable<any> {
-        return this.httpClient.get('https://sv443.net/jokeapi/category/Miscellaneous');
+        return this.httpClient.get('https://v2.jokeapi.dev/joke/Misc');
     }
 
     getJokes(): Observable<Joke[]> {

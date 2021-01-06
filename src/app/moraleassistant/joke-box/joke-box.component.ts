@@ -10,6 +10,8 @@ import { SoundBarComponent } from '../../common/component/sound-bar/sound-bar.co
   styleUrls: ['./joke-box.component.scss']
 })
 export class JokeBoxComponent implements OnInit {
+  @ViewChild(SoundBarComponent, null) soundBar: SoundBarComponent;
+  
   @Input() joke: Joke;
 
   public Language = Language;
@@ -17,8 +19,6 @@ export class JokeBoxComponent implements OnInit {
   public autoplay: boolean;
   public timeLeft: number;
   public maxTimeLeft = 10;
-
-  @ViewChild(SoundBarComponent, null) soundBar: SoundBarComponent;
 
   private countdown: any;
 
