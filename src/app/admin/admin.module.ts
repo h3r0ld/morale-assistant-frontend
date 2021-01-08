@@ -6,11 +6,13 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { MoraleAssistantCommonModule } from '../common/moraleassistant-common.module';
 import { CommonModule } from '@angular/common';
+import { JokeEditDialogComponent } from './joke-edit-dialog/joke-edit-dialog.component';
 
 @NgModule({
     declarations: [
         JokeManagementPageComponent,
         HomePageComponent,
+        JokeEditDialogComponent,
     ],
     imports: [
         CommonModule,

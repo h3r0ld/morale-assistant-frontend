@@ -7,7 +7,7 @@ tr.example-detail-row {
 }
 
 tr.example-element-row:not(.example-expanded-row):hover {
-    background: #777;
+    background: rgb(55, 102, 173);
 }
 
 tr.example-element-row:not(.example-expanded-row):active {
@@ -21,4 +21,8 @@ tr.example-element-row:not(.example-expanded-row):active {
 .example-element-detail {
     overflow: hidden;
     display: flex;
+}
+
+.expanded-panel {
+    padding: 20px 5px;
 }

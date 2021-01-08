@@ -5,6 +5,7 @@ export class Joke {
     language: Language;
     text: string;
     soundFile: any;
+    created: Date;
     lastModified: Date;
 
     constructor(text: string, language: Language) {

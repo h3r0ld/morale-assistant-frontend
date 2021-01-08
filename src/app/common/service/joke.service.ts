@@ -1,33 +1,33 @@
 import { Language } from '../model/language';
 import { Joke } from '../model/joke';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { Injectable, ModuleWithComponentFactories } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { PagedResponse } from '../model/paged-response';
+import { JokeSearchRequest } from '../model/joke-search-request';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class JokeService {
     constructor(private httpClient: HttpClient) { }
 
-    getNextJoke(language: Language): Observable<any> {
-        return this.httpClient.get('https://v2.jokeapi.dev/joke/Misc');
+    saveJoke(joke: Joke) {
+        return this.httpClient.post(`${environment.apiUrl}/admin/joke`, joke);
     }
 
-    getJokes(): Observable<Joke[]> {
-        const jokes = [];
-        for (let i = 0; i < 30; i++) {
-            jokes.push(this.createDummyJoke(45678 + i));
-        }
-        return of(jokes);
+    updateJoke(joke: Joke) {
+        return this.httpClient.put(`${environment.apiUrl}/admin/joke/${joke.id}`, joke);
     }
 
-    private createDummyJoke(id: number): Joke {
-        return {
-            id,
-            text: `This is joke no. ${id}.`,
-            language: Language.EN,
-            soundFilePath: `tmp/asd/${id}.wav`,
-            soundFile: null,
-            lastModified: new Date()
-        } as Joke;
+    deleteJoke(joke: Joke) {
+        return this.httpClient.delete(`${environment.apiUrl}/admin/joke/${joke.id}`);
+    }
+
+    searchJokes(request: JokeSearchRequest): Observable<PagedResponse<Joke>> {
+        return this.httpClient.post<PagedResponse<Joke>>(`${environment.apiUrl}/admin/joke/search`, request);
+    }
+
+    getRandomJoke(language: Language): Observable<Joke> {
+        return this.httpClient.get<Joke>(`${environment.apiUrl}/morale-boost/random/${language}`);
     }
 }

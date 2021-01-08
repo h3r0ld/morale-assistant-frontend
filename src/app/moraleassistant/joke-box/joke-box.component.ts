@@ -11,7 +11,7 @@ import { SoundBarComponent } from '../../common/component/sound-bar/sound-bar.co
 })
 export class JokeBoxComponent implements OnInit {
   @ViewChild(SoundBarComponent, null) soundBar: SoundBarComponent;
-  
+
   @Input() joke: Joke;
 
   public Language = Language;
@@ -48,15 +48,9 @@ export class JokeBoxComponent implements OnInit {
   getNextJoke() {
     this.stopCountdown();
 
-    this.jokeService.getNextJoke(this.joke.language).subscribe(data => {
-      console.log('data: ', data);
-      if (data.type === 'single') {
-        this.joke = new Joke(data.joke, Language.EN);
-        this.joke.soundFile = new Audio('../../../assets/audio/short_sound.mp3');
-      } else {
-        this.joke = new Joke(`${data.setup} ${data.delivery}`, Language.EN);
-        this.joke.soundFile = new Audio('../../../assets/audio/short_sound.mp3');
-      }
+    this.jokeService.getRandomJoke(this.joke.language).subscribe(joke => {
+      this.joke = joke;
+      this.joke.soundFile = new Audio(URL.createObjectURL(joke.soundFile));
 
       if (this.autoplay) {
         this.soundBar.replay();
@@ -69,7 +63,8 @@ export class JokeBoxComponent implements OnInit {
 
   getProgress() {
     return (this.soundBar.isPlaying() || this.soundBar.isPaused()
-    ? Math.floor(this.soundBar.currentTime) / this.soundBar.duration : this.timeLeft / this.maxTimeLeft) * 100;
+      ? Math.floor(this.soundBar.currentTime) / this.soundBar.duration
+      : this.timeLeft / this.maxTimeLeft) * 100;
   }
 
   private stopCountdown() {
