@@ -6,7 +6,6 @@ import { Injectable, ModuleWithComponentFactories } from '@angular/core';
 
 @Injectable()
 export class JokeService {
-
     constructor(private httpClient: HttpClient) { }
 
     getNextJoke(language: Language): Observable<any> {
