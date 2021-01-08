@@ -12,11 +12,11 @@ export class JokeService {
     constructor(private httpClient: HttpClient) { }
 
     saveJoke(joke: Joke) {
-        return this.httpClient.post(`${environment.apiUrl}/admin/joke`, joke);
+        return this.httpClient.post(`${environment.apiUrl}/admin/joke`, { text: joke.text, language: joke.language });
     }
 
     updateJoke(joke: Joke) {
-        return this.httpClient.put(`${environment.apiUrl}/admin/joke/${joke.id}`, joke);
+        return this.httpClient.put(`${environment.apiUrl}/admin/joke/${joke.id}`, { text: joke.text, language: joke.language });
     }
 
     deleteJoke(joke: Joke) {

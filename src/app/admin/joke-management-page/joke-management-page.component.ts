@@ -7,6 +7,8 @@ import { MatSort } from '@angular/material/sort';
 import { trigger, state, transition, style, animate } from '@angular/animations';
 import { SoundBarOptions } from 'src/app/common/component/sound-bar/sound-bar-options';
 import { JokeSearchRequest } from 'src/app/common/model/joke-search-request';
+import { MatDialog } from '@angular/material';
+import { JokeEditDialogComponent } from '../joke-edit-dialog/joke-edit-dialog.component';
 
 @Component({
   selector: 'app-joke-management-page',
@@ -25,15 +27,17 @@ export class JokeManagementPageComponent implements AfterViewInit {
   public jokesDataSource: MatTableDataSource<Joke>;
   public expandedElement: Joke | null;
 
-  public soundBarOptions = SoundBarOptions
-    .build()
-    .hiddenAutoplay(true);
+  public soundBarOptions: SoundBarOptions = {
+    hideAutoplay: true
+  };
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-
-  constructor(private jokeService: JokeService) { }
+  constructor(
+    private jokeService: JokeService,
+    private dialog: MatDialog,
+  ) { }
 
   ngAfterViewInit() {
     this.searchJokes();
@@ -46,7 +50,6 @@ export class JokeManagementPageComponent implements AfterViewInit {
         pageSize: this.paginator.pageSize
       }
     } as JokeSearchRequest;
-    console.log(this.paginator.pageSizeOptions);
 
     this.jokeService.searchJokes(request).subscribe(response => {
       this.jokesDataSource = new MatTableDataSource(response.content);
@@ -62,7 +65,17 @@ export class JokeManagementPageComponent implements AfterViewInit {
 
   modifyJoke(joke: Joke, event: MouseEvent) {
     event.stopPropagation();
-    console.log('Modifying joke...', joke, event);
+
+    this.dialog.open(JokeEditDialogComponent, {
+      width: '300px',
+      data: { joke }
+    }).afterClosed().subscribe((modifiedJoke: Joke) => {
+      if (modifiedJoke) {
+        this.jokeService.updateJoke(modifiedJoke).subscribe(() => {
+          this.searchJokes();
+        });
+      }
+    });
   }
 
   deleteJoke(joke: Joke, event: MouseEvent) {

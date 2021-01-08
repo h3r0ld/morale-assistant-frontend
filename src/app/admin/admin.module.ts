@@ -23,7 +23,10 @@ import { JokeEditDialogComponent } from './joke-edit-dialog/joke-edit-dialog.com
         AdminRoutingModule,
     ],
     exports: [
-        JokeManagementPageComponent
+        JokeManagementPageComponent,
+    ],
+    entryComponents: [
+        JokeEditDialogComponent,
     ],
     providers: []
 })
