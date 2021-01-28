@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { JokeService } from './common/service/joke.service';
 
 @Component({
   selector: 'app-root',

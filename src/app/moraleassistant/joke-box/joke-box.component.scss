@@ -1,0 +1,28 @@
+.joke-box {
+    padding: 20px;
+    width: 800px;
+}
+
+.joke-box-card {
+    background-color: #E8EAF6;
+    padding: 1px;;
+}
+
+.joke-box-card mat-card-content {
+    background-color: #9FA8DA;
+    border-radius: 4px 4px 0px 0px;
+    margin-bottom: 0px;
+    padding: 5px;
+}
+
+.joke-box-card mat-card-actions {
+    background-color: #C5CAE9;
+    padding: 10px 2px 10px 2px;
+    border-radius: 0px 0px 4px 4px;
+    margin: 0px;
+}
+
+.joke-text {
+    min-height: 100px;
+    font-size: 20px;
+}
