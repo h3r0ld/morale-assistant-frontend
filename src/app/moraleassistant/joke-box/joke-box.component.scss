@@ -5,7 +5,8 @@
 
 .joke-box-card {
     background-color: #E8EAF6;
-    padding: 1px;;
+    padding: 1px;
+    width: 100%;
 }
 
 .joke-box-card mat-card-content {
@@ -25,4 +26,8 @@
 .joke-text {
     min-height: 100px;
     font-size: 20px;
+}
+
+.mat-button-toggle-checked {
+    background-color: #7787e4;
 }
