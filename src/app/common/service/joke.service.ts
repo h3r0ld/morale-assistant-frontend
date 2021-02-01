@@ -30,4 +30,8 @@ export class JokeService {
     getRandomJoke(language: Language): Observable<Joke> {
         return this.httpClient.get<Joke>(`${environment.apiUrl}/morale-boost/random/${language}`);
     }
+
+    getJokeSoundURL(joke: Joke) {
+        return `${environment.apiUrl}/admin/joke/${joke.id}/sound`;
+    }
 }

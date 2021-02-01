@@ -9,6 +9,7 @@ import { SoundBarOptions } from 'src/app/common/component/sound-bar/sound-bar-op
 import { JokeSearchRequest } from 'src/app/common/model/joke-search-request';
 import { MatDialog } from '@angular/material';
 import { JokeEditDialogComponent } from '../joke-edit-dialog/joke-edit-dialog.component';
+import { Language } from 'src/app/common/model/language';
 
 @Component({
   selector: 'app-joke-management-page',
@@ -23,6 +24,8 @@ import { JokeEditDialogComponent } from '../joke-edit-dialog/joke-edit-dialog.co
   ],
 })
 export class JokeManagementPageComponent implements AfterViewInit {
+  public readonly Language = Language
+
   public displayedColumns: string[] = [ 'id', 'language', 'text', 'created', 'lastModified', 'modify', 'delete'];
   public jokesDataSource: MatTableDataSource<Joke>;
   public expandedElement: Joke | null;
@@ -30,6 +33,8 @@ export class JokeManagementPageComponent implements AfterViewInit {
   public soundBarOptions: SoundBarOptions = {
     hideAutoplay: true
   };
+
+  public request: JokeSearchRequest = {} as JokeSearchRequest;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -43,15 +48,18 @@ export class JokeManagementPageComponent implements AfterViewInit {
     this.searchJokes();
   }
 
-  searchJokes() {
-    const request = {
-      page: {
-        pageIndex: this.paginator.pageIndex,
-        pageSize: this.paginator.pageSize
-      }
-    } as JokeSearchRequest;
+  resetSearch() {
+    this.request = {} as JokeSearchRequest;
+    this.searchJokes();
+  }
 
-    this.jokeService.searchJokes(request).subscribe(response => {
+  searchJokes() {
+    this.request.page = {
+      pageIndex: this.paginator.pageIndex,
+      pageSize: this.paginator.pageSize
+    };
+
+    this.jokeService.searchJokes(this.request).subscribe(response => {
       this.jokesDataSource = new MatTableDataSource(response.content);
       this.paginator.pageIndex = response.paging.pageIndex;
       this.paginator.pageSize = response.paging.pageSize;
@@ -63,13 +71,32 @@ export class JokeManagementPageComponent implements AfterViewInit {
     this.searchJokes();
   }
 
+  newJoke() {
+    this.openJokeDialog().afterClosed().subscribe((newJoke: Joke) => {
+      if (newJoke) {
+        this.jokeService.saveJoke(newJoke).subscribe(() => {
+          this.searchJokes();
+        });
+      }
+    });
+  }
+
+  getJoke(openedJoke: Joke) {
+    if (this.expandedElement === openedJoke) {
+      this.expandedElement = null;
+    } else {
+      this.expandedElement = openedJoke;
+    }
+  }
+
+  getSoundFileUrl(joke: Joke) {
+    return this.jokeService.getJokeSoundURL(joke);
+  }
+
   modifyJoke(joke: Joke, event: MouseEvent) {
     event.stopPropagation();
 
-    this.dialog.open(JokeEditDialogComponent, {
-      width: '300px',
-      data: { joke }
-    }).afterClosed().subscribe((modifiedJoke: Joke) => {
+    this.openJokeDialog(joke).afterClosed().subscribe((modifiedJoke: Joke) => {
       if (modifiedJoke) {
         this.jokeService.updateJoke(modifiedJoke).subscribe(() => {
           this.searchJokes();
@@ -83,5 +110,12 @@ export class JokeManagementPageComponent implements AfterViewInit {
     this.jokeService.deleteJoke(joke).subscribe(() => {
       this.searchJokes();
     });
+  }
+
+  private openJokeDialog(joke: Joke | undefined = undefined) {
+    return this.dialog.open(JokeEditDialogComponent, {
+      width: '600px',
+      data: { joke }
+    })
   }
 }

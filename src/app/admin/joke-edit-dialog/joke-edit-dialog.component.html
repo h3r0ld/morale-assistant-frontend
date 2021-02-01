@@ -1,12 +1,12 @@
-<h1 mat-dialog-title>{{joke ? 'Edit' : 'Create'}} joke</h1>
-<div mat-dialog-content>
-    {{joke}}
+<h1 mat-dialog-title>{{title}}</h1>
+<div mat-dialog-content fxLayout="column">
+  <app-language-select class="language-select" [required]="true" [(selected)]="joke.language"></app-language-select>
   <mat-form-field>
     <mat-label>Text</mat-label>
-    <textarea matInput [(ngModel)]="joke.text"></textarea>
+    <textarea matInput [(ngModel)]="joke.text" rows="10"></textarea>
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Close</button>
-  <button mat-button [mat-dialog-close]="joke" cdkFocusInitial>Save</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="joke" cdkFocusInitial>Save</button>
 </div>

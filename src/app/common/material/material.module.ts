@@ -9,7 +9,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { NgModule } from '@angular/core';
-import { MatDialogModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatDialogModule, MatDividerModule, MatFormFieldModule, MatInputModule, MatOptionModule, MatSelectModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
@@ -28,6 +28,9 @@ import { FormsModule } from '@angular/forms';
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatDividerModule,
   ]
 })
 export class MaterialModule { }

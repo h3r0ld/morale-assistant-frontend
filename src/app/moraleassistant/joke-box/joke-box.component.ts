@@ -25,7 +25,7 @@ export class JokeBoxComponent implements OnInit {
   constructor(private jokeService: JokeService) { }
 
   ngOnInit() {
-    this.joke = new Joke('Hello, this is a very very funny joke, you should laugh very intensively.', Language.HU);
+    this.joke = new Joke('Hello, this is a very very funny joke, you should laugh very intensively.', Language.Hungarian);
     this.joke.soundFile = new Audio('../../../assets/audio/short_sound.mp3');
   }
 

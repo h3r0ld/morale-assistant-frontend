@@ -6,12 +6,14 @@ import { SoundBarComponent } from './component/sound-bar/sound-bar.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from './material/material.module';
+import { LanguageSelectComponent } from './component/language-select/language-select.component';
 
 @NgModule({
     declarations: [
         TimeFormatterPipe,
         SoundBarComponent,
-        PageNotFoundComponent
+        PageNotFoundComponent,
+        LanguageSelectComponent,
     ],
     imports: [
         FlexLayoutModule,
@@ -22,6 +24,7 @@ import { MaterialModule } from './material/material.module';
         FlexLayoutModule,
         TimeFormatterPipe,
         SoundBarComponent,
+        LanguageSelectComponent,
     ],
     providers: [
         JokeService
