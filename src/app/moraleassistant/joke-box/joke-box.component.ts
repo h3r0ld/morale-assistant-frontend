@@ -14,7 +14,7 @@ import { SoundBarComponent } from '../../common/component/sound-bar/sound-bar.co
 export class JokeBoxComponent {
   public readonly Language = Language;
 
-  @ViewChild(SoundBarComponent, null) soundBar: SoundBarComponent;
+  @ViewChild(SoundBarComponent) soundBar: SoundBarComponent;
 
   @Input() joke: Joke = {}  as Joke;
 
