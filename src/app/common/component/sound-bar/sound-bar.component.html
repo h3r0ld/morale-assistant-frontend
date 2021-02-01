@@ -15,7 +15,7 @@
         <button mat-icon-button (click)="replay()">
             <mat-icon aria-hidden="false" aria-label="Replay">replay</mat-icon>
         </button>
-        <mat-checkbox *ngIf="!(options && options.hideAutoplay)" 
+        <mat-checkbox
             [checked]="autoplay" (change)="autoplay = !autoplay">
             Autoplay
         </mat-checkbox>

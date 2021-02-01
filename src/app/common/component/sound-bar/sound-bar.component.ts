@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { PlayState } from 'src/app/common/model/play-state';
-import { SoundBarOptions } from './sound-bar-options';
 
 
 @Component({
@@ -8,27 +7,24 @@ import { SoundBarOptions } from './sound-bar-options';
   templateUrl: './sound-bar.component.html',
   styleUrls: ['./sound-bar.component.scss']
 })
-export class SoundBarComponent implements OnInit, OnChanges {
+export class SoundBarComponent implements OnChanges {
   @Input() sound: HTMLAudioElement;
-  @Input() options: SoundBarOptions;
+  @Input() autoplay: boolean = false;
   
-  @Output() soundEnded = new EventEmitter();
   @Output() soundStarted = new EventEmitter();
+  @Output() soundStopped = new EventEmitter();
+  @Output() soundEnded = new EventEmitter();
 
   private state: PlayState;
 
   public currentTime: number;
   public duration: number;
-  public autoplay: boolean;
 
   constructor() {
     this.currentTime = 0;
     this.duration = 0;
-    this.autoplay = false;
     this.state = PlayState.STOPPED;
   }
-
-  ngOnInit() { }
 
   ngOnChanges() {
     if (!this.sound) {
@@ -82,6 +78,7 @@ export class SoundBarComponent implements OnInit, OnChanges {
       this.sound.pause();
       this.sound.currentTime = 0;
       this.state = PlayState.STOPPED;
+      this.soundStopped.emit();
     }
   }
 

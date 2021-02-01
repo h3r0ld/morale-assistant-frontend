@@ -5,7 +5,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { trigger, state, transition, style, animate } from '@angular/animations';
-import { SoundBarOptions } from 'src/app/common/component/sound-bar/sound-bar-options';
 import { JokeSearchRequest } from 'src/app/common/model/joke-search-request';
 import { MatDialog } from '@angular/material';
 import { JokeEditDialogComponent } from '../joke-edit-dialog/joke-edit-dialog.component';
@@ -29,10 +28,6 @@ export class JokeManagementPageComponent implements AfterViewInit {
   public displayedColumns: string[] = [ 'id', 'language', 'text', 'created', 'lastModified', 'modify', 'delete'];
   public jokesDataSource: MatTableDataSource<Joke>;
   public expandedElement: Joke | null;
-
-  public soundBarOptions: SoundBarOptions = {
-    hideAutoplay: true
-  };
 
   public request: JokeSearchRequest = {} as JokeSearchRequest;
 
