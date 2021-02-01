@@ -29,17 +29,19 @@ export class JokeBoxComponent {
   constructor(private jokeService: JokeService) { }
 
   onSoundEnded() {
-    console.log('Sound ended, getting next joke... ');
-    this.timeLeft = 10;
-
-    if (!this.countdown) {
-      this.countdown = setInterval(() => {
-        this.timeLeft--;
+    if (this.autoplay) {
+      console.log('Sound ended, getting next joke... ');
+      this.timeLeft = 10;
   
-        if (this.timeLeft === 0) {
-          this.getNextJoke();
-        }
-      }, 1000);
+      if (!this.countdown) {
+        this.countdown = setInterval(() => {
+          this.timeLeft--;
+    
+          if (this.timeLeft === 0) {
+            this.getNextJoke();
+          }
+        }, 1000);
+      }
     }
   }
 
