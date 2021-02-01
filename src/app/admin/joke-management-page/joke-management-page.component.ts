@@ -6,7 +6,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { trigger, state, transition, style, animate } from '@angular/animations';
 import { JokeSearchRequest } from 'src/app/common/model/joke-search-request';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { JokeEditDialogComponent } from '../joke-edit-dialog/joke-edit-dialog.component';
 import { Language } from 'src/app/common/model/language';
 
