@@ -16,6 +16,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
+import {MatToolbarModule} from '@angular/material/toolbar';
+
+
+
 
 @NgModule({
   exports: [
@@ -37,6 +43,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatOptionModule,
     MatDividerModule,
     ReactiveFormsModule,
+    MatSidenavModule,
+    MatListModule,
+    MatToolbarModule,
   ]
 })
 export class MaterialModule { }
