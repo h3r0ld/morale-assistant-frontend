@@ -25,7 +25,7 @@
                 </div>
             </ng-template>
         </mat-card-content>
-        <mat-card-actions *ngIf="started">
+        <mat-card-actions *ngIf="started" fxLayout="column" fxLayoutGap="5px">
             <div fxLayout="row" fxLayoutAlign="space-between center">
                 <app-sound-bar fxFlex="50" 
                     [sound]="joke.soundFile" 
@@ -36,18 +36,37 @@
                 </app-sound-bar>
 
                 <div fxFlex="50" fxLayoutAlign="space-between">
-                    <mat-button-toggle-group [(value)]="selectedLanguage">
-                        <mat-button-toggle [value]=Language.Hungarian>
-                            <span class="flag-icon flag-icon-hu"></span>
-                        </mat-button-toggle>
-                        <mat-button-toggle [value]=Language.English>
-                            <span class="flag-icon flag-icon-gb"></span>
-                        </mat-button-toggle>
-                    </mat-button-toggle-group>
+                    <button mat-icon-button color="primary" (click)="settingsOpened = !settingsOpened">
+                        <mat-icon>settings</mat-icon>
+                    </button>
+
+
                     <button mat-raised-button color="primary" (click)="getNextJoke()">
                         Next One {{timeLeft > 0 ? 'in ' + timeLeft + ' ' : ''}}
                         <mat-icon aria-hidden="false">sentiment_satisfied_alt</mat-icon>
                     </button>
+                </div>
+            </div>
+            <div *ngIf="settingsOpened" >
+                <mat-divider></mat-divider>
+                <div class="settings" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center">
+                    <mat-form-field>
+                        <mat-label>Delay</mat-label>
+                        <input matInput type="number" min="3" [(ngModel)]="maxTimeLeft">
+                        <mat-hint>Seconds between jokes if autoplay is toggled.</mat-hint>
+                        <span matSuffix>s</span>
+                    </mat-form-field>
+                    <div>
+                        <mat-label>Language: </mat-label>
+                        <mat-button-toggle-group [(value)]="selectedLanguage">
+                            <mat-button-toggle [value]=Language.Hungarian>
+                                <span class="flag-icon flag-icon-hu"></span>
+                            </mat-button-toggle>
+                            <mat-button-toggle [value]=Language.English>
+                                <span class="flag-icon flag-icon-gb"></span>
+                            </mat-button-toggle>
+                        </mat-button-toggle-group>
+                    </div>
                 </div>
             </div>
         </mat-card-actions>

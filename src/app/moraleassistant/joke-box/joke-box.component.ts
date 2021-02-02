@@ -22,7 +22,9 @@ export class JokeBoxComponent {
   public selectedLanguage: Language = Language.English;
   public autoplay: boolean = true;
   
+  public maxTimeLeft: number = 10;
   public timeLeft: number;
+  public settingsOpened: boolean = false;
   
   private countdown: any;
 
@@ -31,8 +33,8 @@ export class JokeBoxComponent {
   onSoundEnded() {
     if (this.autoplay) {
       console.log('Sound ended, getting next joke... ');
-      this.timeLeft = 10;
-  
+      this.timeLeft = this.maxTimeLeft || 10;
+
       if (!this.countdown) {
         this.countdown = setInterval(() => {
           this.timeLeft--;
