@@ -26,12 +26,16 @@ export class JokeService {
     searchJokes(request: JokeSearchRequest): Observable<PagedResponse<Joke>> {
         return this.httpClient.post<PagedResponse<Joke>>(`${environment.apiUrl}/admin/joke/search`, request);
     }
+    
+    getJokeSoundURL(joke: Joke) {
+        return `${environment.apiUrl}/admin/joke/${joke.id}/sound`;
+    }
+    
+    getJoke(id: string): Observable<Joke> {
+        return this.httpClient.get<Joke>(`${environment.apiUrl}/morale-boost/${id}`);
+    }
 
     getRandomJoke(language: Language): Observable<Joke> {
         return this.httpClient.get<Joke>(`${environment.apiUrl}/morale-boost/random/${language}`);
-    }
-
-    getJokeSoundURL(joke: Joke) {
-        return `${environment.apiUrl}/admin/joke/${joke.id}/sound`;
     }
 }

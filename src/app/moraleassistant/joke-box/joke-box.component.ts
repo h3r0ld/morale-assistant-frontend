@@ -1,5 +1,6 @@
 import { ThrowStmt } from '@angular/compiler';
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnChanges } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Joke } from 'src/app/common/model/joke';
 import { Language } from 'src/app/common/model/language';
@@ -11,12 +12,12 @@ import { SoundBarComponent } from '../../common/component/sound-bar/sound-bar.co
   templateUrl: './joke-box.component.html',
   styleUrls: ['./joke-box.component.scss']
 })
-export class JokeBoxComponent {
+export class JokeBoxComponent implements OnInit {
   public readonly Language = Language;
 
   @ViewChild(SoundBarComponent) soundBar: SoundBarComponent;
-
-  @Input() joke: Joke = {}  as Joke;
+  
+  public joke: Joke = {}  as Joke;
 
   public started: boolean = false;
   public selectedLanguage: Language = Language.English;
@@ -28,7 +29,25 @@ export class JokeBoxComponent {
   
   private countdown: any;
 
-  constructor(private jokeService: JokeService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private jokeService: JokeService
+  ) { }
+
+  ngOnInit() {
+    const jokeId = this.route.snapshot.params.id;
+
+    if (jokeId) {
+      this.jokeService.getJoke(jokeId).subscribe(joke => {
+        this.started = true;
+        this.autoplay = false;
+        this.handleJokeResponse(joke);
+      }, err => {
+        this.router.navigate(['/']);
+      });
+    }
+  }
 
   onSoundEnded() {
     if (this.autoplay) {
@@ -52,18 +71,7 @@ export class JokeBoxComponent {
     this.stopCountdown();
     this.joke.soundFile = null;
 
-    this.jokeService.getRandomJoke(this.selectedLanguage).subscribe(joke => {
-      this.joke = joke;
-
-      this.joke.soundFile = new Audio("data:audio/wav;base64," + joke.soundFile);
-
-      if (this.autoplay && this.soundBar) {
-        this.soundBar.replay();
-      } else if(this.soundBar) {
-        console.log('Autoplay not set! ', this.autoplay);
-        this.soundBar.stop();
-      }
-    });
+    this.jokeService.getRandomJoke(this.selectedLanguage).subscribe(joke => { this.handleJokeResponse(joke) });
   }
 
   stopCountdown() {
@@ -74,5 +82,18 @@ export class JokeBoxComponent {
       this.countdown = null;
     }
     this.timeLeft = 0;
+  }
+
+  private handleJokeResponse(joke: Joke) {
+    this.joke = joke;
+
+    this.joke.soundFile = new Audio("data:audio/wav;base64," + joke.soundFile);
+
+    if (this.autoplay && this.soundBar) {
+      this.soundBar.replay();
+    } else if(this.soundBar) {
+      console.log('Autoplay not set! ', this.autoplay);
+      this.soundBar.stop();
+    }
   }
 }

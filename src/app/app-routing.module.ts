@@ -9,7 +9,9 @@ import { LoginPageComponent } from './admin/login-page/login-page.component';
 const routes: Routes = [
     { path: 'home', redirectTo: '/', pathMatch: 'full' },
     { path: '', component: HomePageComponent },
-    { path: 'jokebox', component: JokeBoxComponent },
+    { path: 'joke/:id', component: HomePageComponent },
+    { path: 'joke-box', component: JokeBoxComponent },
+    { path: 'joke-box/:id', component: JokeBoxComponent },
     { path: 'login', component: LoginPageComponent },
     { path: 'admin', component: AdminHomePage, canActivate: [AuthGuard], loadChildren: () => import(`./admin/admin.module`).then(m => m.AdminModule) },
     
