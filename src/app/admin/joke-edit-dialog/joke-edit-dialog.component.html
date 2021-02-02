@@ -1,5 +1,9 @@
 <h1 mat-dialog-title>{{title}}</h1>
 <div mat-dialog-content fxLayout="column">
+  <mat-form-field *ngIf="joke.id">
+    <mat-label>ID</mat-label>
+    <input matInput disabled [value]="joke.id">
+  </mat-form-field>
   <app-language-select class="language-select" [required]="true" [(selected)]="joke.language"></app-language-select>
   <mat-form-field>
     <mat-label>Text</mat-label>

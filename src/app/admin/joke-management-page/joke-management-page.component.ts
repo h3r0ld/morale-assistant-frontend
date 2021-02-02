@@ -25,7 +25,7 @@ import { Language } from 'src/app/common/model/language';
 export class JokeManagementPageComponent implements AfterViewInit {
   public readonly Language = Language
 
-  public displayedColumns: string[] = [ 'id', 'language', 'text', 'created', 'lastModified', 'modify', 'delete'];
+  public displayedColumns: string[] = ['language', 'text', 'created', 'lastModified', 'modify', 'delete'];
   public jokesDataSource: MatTableDataSource<Joke>;
   public expandedElement: Joke | null;
 
