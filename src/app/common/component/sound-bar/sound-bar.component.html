@@ -1,4 +1,4 @@
-<div class="sound-bar" fxLayout="row" fxLayoutAlign="space-between center">
+<div class="sound-bar" fxLayout="row" fxLayoutAlign="start center">
     <div>
         {{currentTime | timeFormatter}} / {{duration | timeFormatter}}
     </div>
@@ -15,9 +15,5 @@
         <button mat-icon-button (click)="replay()">
             <mat-icon aria-hidden="false" aria-label="Replay">replay</mat-icon>
         </button>
-        <mat-checkbox
-            [checked]="autoplay" (change)="autoplay = !autoplay">
-            Autoplay
-        </mat-checkbox>
     </div>
 </div>

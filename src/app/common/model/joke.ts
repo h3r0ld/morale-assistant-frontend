@@ -7,6 +7,10 @@ export class Joke {
     soundFile: any;
     created: Date;
     lastModified: Date;
+    
+    embedded?: string;
+    shareURL?: string;
+
 
     constructor(text: string, language: Language) {
         this.text = text;

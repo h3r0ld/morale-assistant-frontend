@@ -1,7 +1,6 @@
-import { ThrowStmt } from '@angular/compiler';
-import { Component, OnInit, Input, ViewChild, OnChanges } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { Joke } from 'src/app/common/model/joke';
 import { Language } from 'src/app/common/model/language';
 import { JokeService } from 'src/app/common/service/joke.service';
@@ -23,6 +22,7 @@ export class JokeBoxComponent implements OnInit {
   public selectedLanguage: Language = Language.English;
   public autoplay: boolean = true;
   
+  public singleJoke: boolean = false;
   public maxTimeLeft: number = 10;
   public timeLeft: number;
   public settingsOpened: boolean = false;
@@ -32,7 +32,8 @@ export class JokeBoxComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private jokeService: JokeService
+    private jokeService: JokeService,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
@@ -40,6 +41,7 @@ export class JokeBoxComponent implements OnInit {
 
     if (jokeId) {
       this.jokeService.getJoke(jokeId).subscribe(joke => {
+        this.singleJoke = true;
         this.started = true;
         this.autoplay = false;
         this.handleJokeResponse(joke);
@@ -84,8 +86,22 @@ export class JokeBoxComponent implements OnInit {
     this.timeLeft = 0;
   }
 
+  onShareCopy(subject: string) {
+    this.snackBar.open(`${subject} copied.`, 'Cool!', {
+      duration: 2000,
+    });
+  }
+
+  onSoundLoaded() {
+    if (this.autoplay) {
+      this.soundBar.play();
+    }
+  }
+
   private handleJokeResponse(joke: Joke) {
     this.joke = joke;
+    this.joke.shareURL = `${window.location.origin}/joke/${joke.id}`;
+    this.joke.embedded = this.getEmbeddedURL(joke);
 
     this.joke.soundFile = new Audio("data:audio/wav;base64," + joke.soundFile);
 
@@ -95,5 +111,9 @@ export class JokeBoxComponent implements OnInit {
       console.log('Autoplay not set! ', this.autoplay);
       this.soundBar.stop();
     }
+  }
+
+  private getEmbeddedURL(joke: Joke) {
+    return `<iframe src="${window.location.origin}/joke-box/${joke.id}" width="840" height="220" frameBorder="0" allowFullScreen></iframe>`;
   }
 }

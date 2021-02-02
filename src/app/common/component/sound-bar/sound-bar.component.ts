@@ -9,8 +9,8 @@ import { PlayState } from 'src/app/common/model/play-state';
 })
 export class SoundBarComponent implements OnChanges {
   @Input() sound: HTMLAudioElement;
-  @Input() autoplay: boolean = false;
   
+  @Output() soundLoaded = new EventEmitter();
   @Output() soundStarted = new EventEmitter();
   @Output() soundStopped = new EventEmitter();
   @Output() soundEnded = new EventEmitter();
@@ -31,7 +31,9 @@ export class SoundBarComponent implements OnChanges {
       return;
     }
 
-    this.sound.load();
+    this.sound.onloadeddata = () => {
+      this.soundLoaded.emit();
+    }
 
     this.sound.ontimeupdate = () => {
       this.currentTime = this.sound.currentTime;
@@ -46,9 +48,7 @@ export class SoundBarComponent implements OnChanges {
       this.soundEnded.emit();
     };
 
-    if (this.autoplay) {
-      this.play();
-    }
+    this.sound.load();
   }
 
   isPlaying(): boolean {
