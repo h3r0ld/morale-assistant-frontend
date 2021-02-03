@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { MoraleAssistantModule } from './moraleassistant/morale-assistant.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AdminModule } from './admin/admin.module';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [ AppComponent ],
@@ -25,7 +26,8 @@ import { AdminModule } from './admin/admin.module';
     MaterialModule,
     MoraleAssistantCommonModule,
     MoraleAssistantModule,
-    AdminModule
+    AdminModule,
+    ToastrModule.forRoot()
   ],
   bootstrap: [AppComponent]
 })

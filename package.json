@@ -25,6 +25,7 @@
     "codelyzer": "^6.0.1",
     "flag-icon-css": "^3.5.0",
     "ngx-spinner": "^10.0.1",
+    "ngx-toastr": "^13.2.0",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

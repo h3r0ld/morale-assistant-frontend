@@ -11,9 +11,9 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SpinnerHttpInterceptor } from './interceptor/spinner.http-interceptor';
 import { AuthenticationService } from './service/authentication.service';
-import { ErrorHttpInterceptor } from './interceptor/error.http-interceptor';
 import { BasicAuthHttpInterceptor } from './interceptor/basic-auth.http-interceptor';
 import { AuthGuard } from './guards/auth.guard';
+import { ErrorHandlerHttpInterceptor } from './interceptor/error-handler.http-interceptor';
 
 @NgModule({
     declarations: [
@@ -40,8 +40,8 @@ import { AuthGuard } from './guards/auth.guard';
         AuthenticationService,
         AuthGuard,
         { provide: HTTP_INTERCEPTORS, useClass: SpinnerHttpInterceptor, multi: true},
-        { provide: HTTP_INTERCEPTORS, useClass: ErrorHttpInterceptor, multi: true},
         { provide: HTTP_INTERCEPTORS, useClass: BasicAuthHttpInterceptor, multi: true},
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerHttpInterceptor, multi: true},
     ]
 })
 export class MoraleAssistantCommonModule { }
