@@ -46,7 +46,7 @@ steps:
 
 - task: oneLuckiDevJson2Variable@1
   inputs:
-    jsonFile: '$(Build.SourcesDirectory)\package.json'
+    jsonFile: '$(Build.SourcesDirectory)/package.json'
     shouldPrefixVariables: true
     variablePrefix: 'app'
 
