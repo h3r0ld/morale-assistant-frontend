@@ -1,0 +1,46 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+# Only build if changes are pushed to master
+trigger:
+- master
+# Don't build on pull requests
+pr: none
+
+variables:
+ - group: github-access
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: InstallSSHKey@0
+  displayName: Install SSH Key to use for GitHub access
+  inputs:
+    knownHostsEntry: 'github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=='
+    sshPublicKey: $(github.ssh.publicKey)
+    sshPassphrase: $(github.ssh.passphrase)
+    sshKeySecureFile: 'github-key'
+- task: CmdLine@2
+  displayName: Configure GIT
+  inputs:
+    script: |
+      git config --global user.email "release.herolds@dev.azure.com"
+
+      git config --global user.name "Azure DevOps"
+
+      git config remote.origin.url "git@github.com:h3r0ld/morale-assistant-frontend.git"
+
+      git checkout $(Build.SourceBranchName)
+
+steps:
+- task: NodeTool@0
+  displayName: 'Install Node.js'
+  inputs:
+    versionSpec: '15.x'
+
+- script: |
+    npm version patch
+  displayName: 'npm version patch'
