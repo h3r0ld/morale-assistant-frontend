@@ -31,12 +31,14 @@ steps:
       git checkout $(Build.SourceBranchName)
 
 - task: oneLuckiDevJson2Variable@1
+  displayName: Get app.version from package.json
   inputs:
     jsonFile: '$(Build.SourcesDirectory)/package.json'
     shouldPrefixVariables: true
     variablePrefix: 'app'
 
 - task: Docker@2
+  displayName: Build and Push Docker Image
   inputs:
     containerRegistry: 'Docker HUB  - h3r0ld'
     repository: 'h3r0ld/morale-assistant-frontend'
@@ -53,8 +55,17 @@ steps:
 
 - script: |
     npm version patch -m '[skip ci] Release %s'
-  displayName: 'npm version patch'
+  displayName: Create new patch version
 
 - script: |
     git push
   displayName: Git PUSH new version
+
+- task: CmdLine@2
+  displayName: Merge master to development
+  inputs:
+    script: |
+      git checkout development
+      git pull origin development
+      git merge origin/master
+      git push origin development
