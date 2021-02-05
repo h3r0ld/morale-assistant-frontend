@@ -1,0 +1,9 @@
+<mat-form-field>
+    <mat-label>Language</mat-label>
+    <mat-select [(ngModel)]="selected" (selectionChange)="selectChanged()">
+      <mat-option *ngIf="!required" [value]="null"></mat-option>
+      <mat-option *ngFor="let language of LanguageEnum | keyvalue" [value]="language.value">
+        {{ language.key }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>

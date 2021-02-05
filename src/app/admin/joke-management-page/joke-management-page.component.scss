@@ -1,0 +1,74 @@
+.joke-search {
+    width: 80%;
+    padding: 20px;
+}
+
+.toolbar {
+    margin-bottom: 20px;
+
+    .buttons {
+        .reset-button {
+            background-color: red;
+            color: white;
+        }
+    }
+}
+
+.joke-table {
+    table {
+        width: 100%;
+    }
+
+    .table-action {
+        display: flex;
+        justify-content: center;
+    }
+
+    .mat-column-language {
+        width: 10%;
+    }
+    .mat-column-text {
+        width: 60%;
+    }
+    .mat-column-created {
+        width: 10%;   
+    }
+    .mat-column-lastModified {
+        width: 10%;
+    }
+    .mat-column-modify {
+        width: 5%;
+        text-align: center;
+    }
+    .mat-column-delete {
+        width: 5%;
+        text-align: center;
+    }
+}
+
+tr.joke-detail-row {
+    height: 0;
+}
+
+tr.joke-row:not(.joke-expanded-row):hover {
+    background: rgb(55, 102, 173);
+    cursor: pointer;
+}
+
+tr.joke-row:not(.joke-expanded-row):active {
+    background: #efefef;
+}
+
+.joke-row td {
+    border-bottom-width: 0;
+}
+
+.joke-detail {
+    overflow: hidden;
+    display: flex;
+}
+
+.expanded-panel {
+    padding: 20px 5px;
+    width: 100%;
+}

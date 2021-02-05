@@ -1,0 +1,116 @@
+<div class="joke-box">
+    <mat-card class="joke-box-card">
+        <ngx-spinner name="spinner" type="pacman" [fullScreen]="false" size="small"></ngx-spinner>
+        
+        <mat-card-content>
+            <div *ngIf="started; else startBlock" class="joke-text">{{joke.text}}</div>
+            <ng-template #startBlock>
+                <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+                    Choose language: 
+                    <mat-button-toggle-group [(value)]="selectedLanguage">
+                        <mat-button-toggle [value]=Language.Hungarian>
+                            <span class="flag-icon flag-icon-hu"></span>
+                        </mat-button-toggle>
+                        <mat-button-toggle [value]=Language.English>
+                            <span class="flag-icon flag-icon-gb"></span>
+                        </mat-button-toggle>
+                    </mat-button-toggle-group>
+                    <mat-checkbox
+                        [(ngModel)]="autoplay">
+                        Autoplay
+                    </mat-checkbox>
+                    <button mat-raised-button color="primary" (click)="getNextJoke()">
+                        Start laughing!
+                    </button>
+                </div>
+            </ng-template>
+        </mat-card-content>
+        <mat-card-actions *ngIf="started" fxLayout="column" fxLayoutGap="5px">
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+                <app-sound-bar fxFlex="30" 
+                    [sound]="joke.soundFile" 
+                    (soundLoaded)="onSoundLoaded()"
+                    (soundStarted)="stopCountdown()"
+                    (soundStopped)="stopCountdown()"
+                    (soundEnded)="onSoundEnded()">
+                </app-sound-bar>
+                <div fxFlex="10" fxLayout="row">
+                    <mat-divider [vertical]="true"></mat-divider>
+                    <button *ngIf="!singleJoke" mat-icon-button color="primary" (click)="settingsOpened = !settingsOpened">
+                        <mat-icon>settings</mat-icon>
+                    </button>
+                    <button mat-icon-button color="primary" [matMenuTriggerFor]="shareMenu">
+                        <mat-icon>ios_share</mat-icon>
+                    </button>
+                    <mat-menu #shareMenu="matMenu" (click)="true">
+                        <div class="share-menu" (click)="$event.stopPropagation()">
+                            <div *ngIf="joke.shareURL">
+                                <mat-form-field>
+                                    <mat-label>
+                                        <mat-icon>link</mat-icon>
+                                        URL
+                                    </mat-label>
+                                    <input matInput [value]="joke.shareURL">
+                                    <button mat-icon-button matSuffix [cdkCopyToClipboard]="joke.shareURL" (cdkCopyToClipboardCopied)="onShareCopy('Share link to joke')">
+                                        <mat-icon>content_copy</mat-icon>
+                                    </button>
+                                </mat-form-field>
+                            </div>
+                            <div *ngIf="joke.embedded">
+                                <mat-form-field>
+                                    <mat-label>
+                                        <mat-icon>extension</mat-icon>
+                                        Embedded
+                                    </mat-label>
+                                    <input matInput [value]="joke.embedded">
+                                    <button mat-icon-button matSuffix [cdkCopyToClipboard]="joke.embedded" (cdkCopyToClipboardCopied)="onShareCopy('Embedded joke')">
+                                        <mat-icon>content_copy</mat-icon>
+                                    </button>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </mat-menu>
+                </div>
+                <div fxFlex="60" fxLayout="row" fxLayoutAlign="space-between">
+                    <mat-divider [vertical]="true"></mat-divider>
+                    <div>
+                        <button *ngIf="!singleJoke; else seeMoreBlock" mat-raised-button color="primary" (click)="getNextJoke()">
+                            Next One {{timeLeft > 0 ? 'in ' + timeLeft + ' ' : ''}}
+                            <mat-icon aria-hidden="false">sentiment_satisfied_alt</mat-icon>
+                        </button>
+                        <ng-template #seeMoreBlock>
+                            <button mat-raised-button color="primary" [routerLink]="'/'">
+                                See more!
+                                <mat-icon aria-hidden="false">explore</mat-icon>
+                            </button>
+                        </ng-template>                      
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="settingsOpened && !singleJoke">
+                <mat-divider></mat-divider>
+                <div class="settings" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center">
+                    <div>
+                        <mat-label>Language: </mat-label>
+                        <mat-button-toggle-group [(value)]="selectedLanguage">
+                            <mat-button-toggle [value]=Language.Hungarian>
+                                <span class="flag-icon flag-icon-hu"></span>
+                            </mat-button-toggle>
+                            <mat-button-toggle [value]=Language.English>
+                                <span class="flag-icon flag-icon-gb"></span>
+                            </mat-button-toggle>
+                        </mat-button-toggle-group>
+                    </div>
+                    <mat-checkbox [(ngModel)]="autoplay">
+                        Autoplay
+                    </mat-checkbox>
+                    <mat-form-field *ngIf="autoplay">
+                        <mat-label>Delay between jokes</mat-label>
+                        <input matInput type="number" min="3" [(ngModel)]="maxTimeLeft">
+                        <span matSuffix>s</span>
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</div>
