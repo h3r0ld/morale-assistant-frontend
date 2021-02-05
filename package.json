@@ -1,10 +1,12 @@
 {
   "name": "morale-assistant-frontend",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
+    "prerelease": "npm version patch",
+    "release": "npm run build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
