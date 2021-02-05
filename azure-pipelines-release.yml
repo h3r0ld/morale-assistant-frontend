@@ -5,7 +5,7 @@
 
 # Only build if changes are pushed to master
 trigger:
-- main
+- master
 # Don't build on pull requests
 pr: none
 
@@ -34,14 +34,21 @@ steps:
       git config remote.origin.url "git@github.com:h3r0ld/morale-assistant-frontend.git"
 
       git checkout $(Build.SourceBranchName)
+
 - task: NodeTool@0
   displayName: 'Install Node.js'
   inputs:
     versionSpec: '15.x'
 
 - script: |
-    npm version patch
+    npm version patch -m '[skip ci] Release %s'
   displayName: 'npm version patch'
+
+- task: oneLuckiDevJson2Variable@1
+  inputs:
+    jsonFile: '$(Build.SourcesDirectory)\package.json'
+    shouldPrefixVariables: true
+    variablePrefix: 'app'
 
 - task: Docker@2
   inputs:
@@ -49,4 +56,11 @@ steps:
     repository: 'h3r0ld/morale-assistant-frontend'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
-    tags: 'latest'
+    tags: |
+      $(app.version)
+      latest
+
+- task: CmdLine@2
+  displayName: Git PUSH new version
+  inputs:
+    script: 'git push'
