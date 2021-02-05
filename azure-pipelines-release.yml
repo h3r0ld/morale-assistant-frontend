@@ -1,8 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 # Only build if changes are pushed to master
 trigger:
 - master
@@ -35,15 +30,6 @@ steps:
 
       git checkout $(Build.SourceBranchName)
 
-- task: NodeTool@0
-  displayName: 'Install Node.js'
-  inputs:
-    versionSpec: '15.x'
-
-- script: |
-    npm version patch -m '[skip ci] Release %s'
-  displayName: 'npm version patch'
-
 - task: oneLuckiDevJson2Variable@1
   inputs:
     jsonFile: '$(Build.SourcesDirectory)/package.json'
@@ -60,7 +46,15 @@ steps:
       $(app.version)
       latest
 
-- task: CmdLine@2
-  displayName: Git PUSH new version
+- task: NodeTool@0
+  displayName: 'Install Node.js'
   inputs:
-    script: 'git push'
+    versionSpec: '15.x'
+
+- script: |
+    npm version patch -m '[skip ci] Release %s'
+  displayName: 'npm version patch'
+
+- script: |
+    git push
+  displayName: Git PUSH new version
