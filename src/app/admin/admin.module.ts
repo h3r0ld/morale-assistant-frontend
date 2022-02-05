@@ -20,15 +20,11 @@ import { LoginPageComponent } from './login-page/login-page.component';
         CommonModule,
         RouterModule,
         MaterialModule,
-
         MoraleAssistantCommonModule,
         AdminRoutingModule,
     ],
     exports: [
         JokeManagementPageComponent,
-    ],
-    entryComponents: [
-        JokeEditDialogComponent,
     ],
     providers: []
 })
