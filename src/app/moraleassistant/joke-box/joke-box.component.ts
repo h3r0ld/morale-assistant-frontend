@@ -15,18 +15,18 @@ export class JokeBoxComponent implements OnInit {
   public readonly Language = Language;
 
   @ViewChild(SoundBarComponent) soundBar: SoundBarComponent;
-  
+
   public joke: Joke = {}  as Joke;
 
-  public started: boolean = false;
+  public started = false;
   public selectedLanguage: Language = Language.English;
-  public autoplay: boolean = true;
-  
-  public singleJoke: boolean = false;
-  public maxTimeLeft: number = 10;
+  public autoplay = true;
+
+  public singleJoke = false;
+  public maxTimeLeft = 10;
   public timeLeft: number;
-  public settingsOpened: boolean = false;
-  
+  public settingsOpened = false;
+
   private countdown: any;
 
   constructor(
@@ -59,7 +59,6 @@ export class JokeBoxComponent implements OnInit {
       if (!this.countdown) {
         this.countdown = setInterval(() => {
           this.timeLeft--;
-    
           if (this.timeLeft === 0) {
             this.getNextJoke();
           }
@@ -103,7 +102,7 @@ export class JokeBoxComponent implements OnInit {
     this.joke.shareURL = `${window.location.origin}/joke/${joke.id}`;
     this.joke.embedded = this.getEmbeddedURL(joke);
 
-    this.joke.soundFile = new Audio("data:audio/wav;base64," + joke.soundFile);
+    this.joke.soundFile = new Audio('data:audio/wav;base64,' + joke.soundFile);
 
     if (this.autoplay && this.soundBar) {
       this.soundBar.replay();
