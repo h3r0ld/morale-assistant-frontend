@@ -21,7 +21,8 @@ export class ErrorHandlerHttpInterceptor implements HttpInterceptor {
     .pipe(
       catchError((httpErrorResponse: HttpErrorResponse) => {
         const backendErrorResponse = httpErrorResponse.error as BackendErrorResponse;
-
+        console.log('ErrorHandler: ', httpErrorResponse);
+        
         if (httpErrorResponse.status === 401) {
           this.showUnauthorizedError();
           // auto logout if 401 response returned from api

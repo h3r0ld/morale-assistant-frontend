@@ -5,7 +5,6 @@ import { AuthGuard } from '../common/guards/auth.guard';
 
 const routes: Routes = [
     { path: 'jokes', component: JokeManagementPageComponent, canActivate: [AuthGuard] },
-
     // Redirect to home
     { path: '**', redirectTo: '' },
 ];

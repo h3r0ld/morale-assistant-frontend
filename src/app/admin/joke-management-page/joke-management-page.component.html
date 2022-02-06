@@ -81,10 +81,12 @@
                     [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                     <div class="expanded-panel" fxLayout="column" fxLayoutGap="10px">
                         <div fxLayout="row" fxLayoutAlign="start center">
-                            <audio *ngIf="expandedElement === element" controls 
-                                    [src]="getSoundFileUrl(element)"
-                                    type="audio/wav"
-                                    title="joke-{{expandedElement.id}}"></audio>
+                            <audio *ngIf="expandedElement === element && expandedElement.soundFile" 
+                                    controls 
+                                    autobuffer
+                                    title="joke-{{expandedElement.id}}">
+                                <source [src]="expandedElement.soundFile"/>
+                            </audio>
                         </div>
                         <mat-divider></mat-divider>
                         <div> {{element.text}} </div>

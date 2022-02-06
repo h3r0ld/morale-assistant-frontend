@@ -1,14 +1,16 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { JokeService } from 'src/app/common/service/joke.service';
-import { Joke } from 'src/app/common/model/joke';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { trigger, state, transition, style, animate } from '@angular/animations';
-import { JokeSearchRequest } from 'src/app/common/model/joke-search-request';
 import { MatDialog } from '@angular/material/dialog';
 import { JokeEditDialogComponent } from '../joke-edit-dialog/joke-edit-dialog.component';
-import { Language } from 'src/app/common/model/language';
+import { JokeDto } from 'src/app/common/client/admin/model/jokeDto';
+import { JokeSearchRequest } from 'src/app/common/client/admin/model/jokeSearchRequest';
+import { JokeControllerService } from 'src/app/common/client/admin/api/jokeController.service';
+import { PageJokeDto } from 'src/app/common/client/admin';
+import { Joke } from 'src/app/common/model/joke';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-joke-management-page',
@@ -23,21 +25,25 @@ import { Language } from 'src/app/common/model/language';
   ],
 })
 export class JokeManagementPageComponent implements AfterViewInit {
-  public readonly Language = Language
+  public readonly Language = JokeDto.LanguageEnum;
 
   public displayedColumns: string[] = ['language', 'text', 'created', 'lastModified', 'modify', 'delete'];
-  public jokesDataSource: MatTableDataSource<Joke>;
+  public jokesDataSource: MatTableDataSource<JokeDto> = new MatTableDataSource<JokeDto>();
+  
   public expandedElement: Joke | null;
 
-  public request: JokeSearchRequest = {} as JokeSearchRequest;
+  public request: JokeSearchRequest = { page: 0, pageSize: 5 };
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(
-    private jokeService: JokeService,
+    private jokeService: JokeControllerService,
     private dialog: MatDialog,
-  ) { }
+    private domSanitizer: DomSanitizer,
+  ) {
+    this.searchJokes = this.searchJokes.bind(this);
+  }
 
   ngAfterViewInit() {
     this.searchJokes();
@@ -49,16 +55,14 @@ export class JokeManagementPageComponent implements AfterViewInit {
   }
 
   searchJokes() {
-    this.request.page = {
-      pageIndex: this.paginator.pageIndex,
-      pageSize: this.paginator.pageSize
-    };
+    this.request.page = this.paginator.pageIndex;
+    this.request.pageSize = this.paginator.pageSize;
 
-    this.jokeService.searchJokes(this.request).subscribe(response => {
-      this.jokesDataSource = new MatTableDataSource(response.content);
-      this.paginator.pageIndex = response.paging.pageIndex;
-      this.paginator.pageSize = response.paging.pageSize;
-      this.paginator.length = response.paging.totalElements;
+    this.jokeService.searchJokes(this.request).subscribe((response: PageJokeDto) => {
+      this.jokesDataSource.data = response.content;
+      this.paginator.pageIndex = response.number;
+      this.paginator.pageSize = response.numberOfElements;
+      this.paginator.length = response.totalElements;
     });
   }
 
@@ -67,50 +71,43 @@ export class JokeManagementPageComponent implements AfterViewInit {
   }
 
   newJoke() {
-    this.openJokeDialog().afterClosed().subscribe((newJoke: Joke) => {
+    this.openJokeDialog().afterClosed().subscribe((newJoke: JokeDto) => {
       if (newJoke) {
-        this.jokeService.saveJoke(newJoke).subscribe(() => {
-          this.searchJokes();
-        });
+        this.jokeService.saveJoke(newJoke).subscribe(this.searchJokes);
       }
     });
   }
 
-  getJoke(openedJoke: Joke) {
+  getJoke(openedJoke: JokeDto) {
     if (this.expandedElement === openedJoke) {
       this.expandedElement = null;
     } else {
-      this.expandedElement = openedJoke;
+      this.jokeService.getJoke(openedJoke.id).subscribe(joke => {
+        this.expandedElement = openedJoke;
+        this.expandedElement.soundFile = this.domSanitizer.bypassSecurityTrustUrl(`data:audio/wav;base64,${joke.soundFile}`);
+      });
     }
   }
 
-  getSoundFileUrl(joke: Joke) {
-    return this.jokeService.getJokeSoundURL(joke);
-  }
-
-  modifyJoke(joke: Joke, event: MouseEvent) {
+  modifyJoke(joke: JokeDto, event: MouseEvent) {
     event.stopPropagation();
 
-    this.openJokeDialog(joke).afterClosed().subscribe((modifiedJoke: Joke) => {
+    this.openJokeDialog(joke).afterClosed().subscribe((modifiedJoke: JokeDto) => {
       if (modifiedJoke) {
-        this.jokeService.updateJoke(modifiedJoke).subscribe(() => {
-          this.searchJokes();
-        });
+        this.jokeService.updateJoke(modifiedJoke.id, modifiedJoke).subscribe(this.searchJokes);
       }
     });
   }
 
-  deleteJoke(joke: Joke, event: MouseEvent) {
+  deleteJoke(joke: JokeDto, event: MouseEvent) {
     event.stopPropagation();
-    this.jokeService.deleteJoke(joke).subscribe(() => {
-      this.searchJokes();
-    });
+    this.jokeService.deleteJoke(new Set([joke.id])).subscribe(this.searchJokes);
   }
 
-  private openJokeDialog(joke: Joke | undefined = undefined) {
+  private openJokeDialog(joke: JokeDto | undefined = undefined) {
     return this.dialog.open(JokeEditDialogComponent, {
       width: '600px',
       data: { joke }
-    })
+    });
   }
 }

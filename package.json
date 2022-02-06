@@ -7,7 +7,8 @@
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "generate-clients": "openapi-generator-cli generate"
   },
   "private": true,
   "dependencies": {
@@ -16,15 +17,16 @@
     "@angular/common": "~13.2.1",
     "@angular/compiler": "~13.2.1",
     "@angular/core": "~13.2.1",
-    "@angular/flex-layout": "^11.0.0-beta.33",
+    "@angular/flex-layout": "^13.0.0-beta.38",
     "@angular/forms": "~13.2.1",
     "@angular/material": "^13.2.1",
     "@angular/platform-browser": "~13.2.1",
     "@angular/platform-browser-dynamic": "~13.2.1",
     "@angular/router": "~13.2.1",
+    "@openapitools/openapi-generator-cli": "^2.4.26",
     "codelyzer": "^6.0.2",
     "flag-icon-css": "^3.5.0",
-    "ngx-spinner": "^10.0.1",
+    "ngx-spinner": "^13.1.1",
     "ngx-toastr": "^13.2.1",
     "rxjs": "^6.6.7",
     "tslib": "^2.3.1",

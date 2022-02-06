@@ -1,7 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Joke } from 'src/app/common/model/joke';
-import { JokeService } from 'src/app/common/service/joke.service';
+import { Component } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 @Component({
