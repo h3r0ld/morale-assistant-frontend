@@ -1,0 +1,27 @@
+{
+  "$schema": "./node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+  "spaces": 2,
+  "generator-cli": {
+    "version": "5.4.0",
+    "generators": {
+      "public": {
+        "generatorName": "typescript-angular",
+        "output": "./src/app/common/client/public",
+        "glob": "docs/open-api.public.json",
+        "additionalProperties": {
+          "apiModulePrefix": "Public",
+          "configurationPrefix": "Public"
+        }
+      },
+      "admin": {
+        "generatorName": "typescript-angular",
+        "output": "./src/app/common/client/admin",
+        "glob": "docs/open-api.admin.json",
+        "additionalProperties": {
+          "apiModulePrefix": "Admin",
+          "configurationPrefix": "Admin"
+        }
+      }
+    }
+  }
+}

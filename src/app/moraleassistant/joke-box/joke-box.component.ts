@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { JokeDto } from 'src/app/common/client/admin';
+import { MoraleAssistantControllerService } from 'src/app/common/client/public';
 import { Joke } from 'src/app/common/model/joke';
-import { Language } from 'src/app/common/model/language';
-import { JokeService } from 'src/app/common/service/joke.service';
 import { SoundBarComponent } from '../../common/component/sound-bar/sound-bar.component';
 
 @Component({
@@ -12,27 +12,27 @@ import { SoundBarComponent } from '../../common/component/sound-bar/sound-bar.co
   styleUrls: ['./joke-box.component.scss']
 })
 export class JokeBoxComponent implements OnInit {
-  public readonly Language = Language;
+  public readonly Language = JokeDto.LanguageEnum;
 
   @ViewChild(SoundBarComponent) soundBar: SoundBarComponent;
-  
+
   public joke: Joke = {}  as Joke;
 
-  public started: boolean = false;
-  public selectedLanguage: Language = Language.English;
-  public autoplay: boolean = true;
-  
-  public singleJoke: boolean = false;
-  public maxTimeLeft: number = 10;
+  public started = false;
+  public selectedLanguage: JokeDto.LanguageEnum = JokeDto.LanguageEnum.En;
+  public autoplay = true;
+
+  public singleJoke = false;
+  public maxTimeLeft = 10;
   public timeLeft: number;
-  public settingsOpened: boolean = false;
-  
+  public settingsOpened = false;
+
   private countdown: any;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private jokeService: JokeService,
+    private jokeService: MoraleAssistantControllerService,
     private snackBar: MatSnackBar,
   ) { }
 
@@ -59,7 +59,6 @@ export class JokeBoxComponent implements OnInit {
       if (!this.countdown) {
         this.countdown = setInterval(() => {
           this.timeLeft--;
-    
           if (this.timeLeft === 0) {
             this.getNextJoke();
           }
@@ -98,12 +97,12 @@ export class JokeBoxComponent implements OnInit {
     }
   }
 
-  private handleJokeResponse(joke: Joke) {
+  private handleJokeResponse(joke: JokeDto) {
     this.joke = joke;
     this.joke.shareURL = `${window.location.origin}/joke/${joke.id}`;
     this.joke.embedded = this.getEmbeddedURL(joke);
 
-    this.joke.soundFile = new Audio("data:audio/wav;base64," + joke.soundFile);
+    this.joke.soundFile = new Audio('data:audio/wav;base64,' + joke.soundFile);
 
     if (this.autoplay && this.soundBar) {
       this.soundBar.replay();
@@ -113,7 +112,7 @@ export class JokeBoxComponent implements OnInit {
     }
   }
 
-  private getEmbeddedURL(joke: Joke) {
+  private getEmbeddedURL(joke: JokeDto) {
     return `<iframe src="${window.location.origin}/joke-box/${joke.id}" width="840" height="220" frameBorder="0" allowFullScreen></iframe>`;
   }
 }

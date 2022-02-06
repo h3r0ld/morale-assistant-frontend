@@ -13,9 +13,7 @@ export class SpinnerHttpInterceptor implements HttpInterceptor {
     constructor(private spinner: NgxSpinnerService) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        this.spinner.show(SpinnerHttpInterceptor.SPINNER_NAME,{
-          type: 'pacman'
-        });
+        this.spinner.show(SpinnerHttpInterceptor.SPINNER_NAME);
     
         this.count++;
 

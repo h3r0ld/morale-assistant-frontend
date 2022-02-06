@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserCredentials } from 'src/app/common/model/user';
 import { AuthenticationService } from 'src/app/common/service/authentication.service';
 
 @Component({
@@ -13,7 +12,7 @@ export class LoginPageComponent implements OnInit {
   public loginForm: FormGroup;
 
   private returnUrl: string;
-  
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -21,7 +20,7 @@ export class LoginPageComponent implements OnInit {
     private formBuilder: FormBuilder,
   ) {
     if (this.authenticationService.userValue) {
-      this.router.navigate(['/admin'])
+      this.router.navigate(['/admin']);
     }
   }
 
@@ -31,7 +30,7 @@ export class LoginPageComponent implements OnInit {
       password: ['', Validators.required]
     });
 
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/admin';
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/admin';
   }
 
   login() {
@@ -40,7 +39,7 @@ export class LoginPageComponent implements OnInit {
     }
 
     this.authenticationService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(() => {
-      this.loginForm.reset()
+      this.loginForm.reset();
       this.router.navigate([this.returnUrl]);
     });
   }

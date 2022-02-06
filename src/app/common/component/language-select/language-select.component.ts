@@ -1,6 +1,6 @@
 import { EventEmitter } from '@angular/core';
 import { Component, Input, OnInit, Output } from '@angular/core';
-import { Language } from '../../model/language';
+import { JokeDto } from '../../client/public/model/jokeDto';
 
 @Component({
   selector: 'app-language-select',
@@ -8,20 +8,20 @@ import { Language } from '../../model/language';
   styleUrls: ['./language-select.component.scss']
 })
 export class LanguageSelectComponent implements OnInit {
-  public readonly LanguageEnum = Language
+  public readonly LanguageEnum = JokeDto.LanguageEnum
 
   @Input()
   public required: boolean = false;
 
   @Input()
-  public selected: Language;
+  public selected: JokeDto.LanguageEnum;
 
   @Output()
-  public selectedChange = new EventEmitter<Language>();
+  public selectedChange = new EventEmitter<JokeDto.LanguageEnum>();
 
   ngOnInit() {
     if (!this.selected && this.required) {
-      this.selected = Language.English;
+      this.selected = JokeDto.LanguageEnum.En;
     }
   }
 

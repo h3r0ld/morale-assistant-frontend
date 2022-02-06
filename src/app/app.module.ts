@@ -12,6 +12,10 @@ import { MoraleAssistantModule } from './moraleassistant/morale-assistant.module
 import { AppRoutingModule } from './app-routing.module';
 import { AdminModule } from './admin/admin.module';
 import { ToastrModule } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
+import { PublicApiModule } from './common/client/public/api.module';
+import { AdminApiModule, AdminConfiguration } from './common/client/admin';
+import { PublicConfiguration } from './common/client/public/configuration';
 
 @NgModule({
   declarations: [ AppComponent ],
@@ -27,7 +31,17 @@ import { ToastrModule } from 'ngx-toastr';
     MoraleAssistantCommonModule,
     MoraleAssistantModule,
     AdminModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    PublicApiModule.forRoot(() => {
+      return new PublicConfiguration({
+        basePath: environment.apiUrl
+      });
+    }),
+    AdminApiModule.forRoot(() => {
+      return new AdminConfiguration({
+        basePath: environment.apiUrl
+      });
+    })
   ],
   bootstrap: [AppComponent]
 })

@@ -51,15 +51,16 @@ steps:
 - task: NodeTool@0
   displayName: 'Install Node.js'
   inputs:
-    versionSpec: '15.x'
+    versionSpec: '16.x'
 
 - script: |
     npm version patch -m '[skip ci] Release %s'
   displayName: Create new patch version
 
 - script: |
-    git push
-  displayName: Git PUSH new version
+    git tag -a $(app.version) -m "Release - $(app.version)"
+    git push --tags
+  displayName: Git tag and PUSH new version
 
 - task: CmdLine@2
   displayName: Merge master to development
