@@ -1,5 +1,5 @@
 # Stage 1
-FROM node:14 as build
+FROM node:16 as build
 
 RUN mkdir -p /app
 
@@ -16,8 +16,9 @@ RUN npm run generate-clients
 RUN npm run build
 
 # Stage 2
-FROM nginx:1.19.6-alpine
+FROM nginx:1.21.6-alpine
 
 EXPOSE 80
 
 COPY --from=build /app/dist/morale-assistant-frontend /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
