@@ -7,7 +7,7 @@
       "public": {
         "generatorName": "typescript-angular",
         "output": "./src/app/common/client/public",
-        "glob": "docs/open-api.public.json",
+        "glob": "*/open-api.public.json",
         "additionalProperties": {
           "apiModulePrefix": "Public",
           "configurationPrefix": "Public"
@@ -16,7 +16,7 @@
       "admin": {
         "generatorName": "typescript-angular",
         "output": "./src/app/common/client/admin",
-        "glob": "docs/open-api.admin.json",
+        "glob": "*/open-api.admin.json",
         "additionalProperties": {
           "apiModulePrefix": "Admin",
           "configurationPrefix": "Admin"
