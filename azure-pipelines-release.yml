@@ -58,7 +58,6 @@ steps:
   displayName: Create new patch version
 
 - script: |
-    git tag -a $(app.version) -m "Release - $(app.version)"
     git push --tags
   displayName: Git tag and PUSH new version
 
