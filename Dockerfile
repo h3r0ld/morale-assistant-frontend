@@ -2,7 +2,7 @@
 FROM node:16 as build
 
 # Need to install JRE, because openapi-generate-cli uses java...
-RUN apt-get -y install default-jre
+RUN apt-get update && apt-get -y install default-jre
 
 RUN mkdir -p /app
 
