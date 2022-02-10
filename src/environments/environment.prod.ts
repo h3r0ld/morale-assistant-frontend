@@ -1,5 +1,5 @@
 export const environment = {
-  appVersion: require('../../package.json').version + '-SNAPSHOT',
+  appVersion: require('../../package.json').version,
   production: true,
-  apiUrl: 'http://localhost:8080/api'
+  apiUrl: 'https://ec2-3-71-15-183.eu-central-1.compute.amazonaws.com'
 };

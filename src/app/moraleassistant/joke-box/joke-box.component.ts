@@ -34,7 +34,9 @@ export class JokeBoxComponent implements OnInit {
     private router: Router,
     private jokeService: MoraleAssistantControllerService,
     private snackBar: MatSnackBar,
-  ) { }
+  ) {
+    this.handleJokeResponse = this.handleJokeResponse.bind(this);
+  }
 
   ngOnInit() {
     const jokeId = this.route.snapshot.params.id;
@@ -72,7 +74,7 @@ export class JokeBoxComponent implements OnInit {
     this.stopCountdown();
     this.joke.soundFile = null;
 
-    this.jokeService.getRandomJoke(this.selectedLanguage).subscribe(joke => { this.handleJokeResponse(joke) });
+    this.jokeService.getRandomJoke(this.selectedLanguage).subscribe(this.handleJokeResponse);
   }
 
   stopCountdown() {
