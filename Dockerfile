@@ -8,13 +8,11 @@ RUN mkdir -p /app
 
 WORKDIR /app
 
-COPY package*.json /app/
+COPY . /app
 
 RUN npm install
 
 RUN npm run generate-clients
-
-COPY . /app
 
 RUN npm run build
 
