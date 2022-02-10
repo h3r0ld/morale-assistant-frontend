@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "generate-clients": "openapi-generator-cli generate"
+    "generate-clients": "openapi-generator-cli generate",
+    "deploy": "ng deploy"
   },
   "private": true,
   "dependencies": {
@@ -40,6 +41,7 @@
     "@types/jasmine": "^3.6.11",
     "@types/jasminewd2": "^2.0.10",
     "@types/node": "^12.20.43",
+    "angular-cli-ghpages": "^1.0.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~6.3.15",
