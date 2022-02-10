@@ -1,13 +1,14 @@
 # Stage 1
 FROM node:16 as build
 
+# Need to install JRE, because openapi-generate-cli uses java...
+RUN apt-get -y install default-jre
+
 RUN mkdir -p /app
 
 WORKDIR /app
 
 COPY package*.json /app/
-
-RUN npm install -g @angular/cli
 
 RUN npm install
 
