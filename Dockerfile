@@ -9,6 +9,8 @@ COPY package*.json /app/
 
 RUN npm install
 
+RUN npm install @openapitools/openapi-generator-cli -g
+
 COPY . /app
 
 RUN npm run generate-clients
