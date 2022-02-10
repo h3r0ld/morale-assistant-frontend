@@ -7,9 +7,9 @@ WORKDIR /app
 
 COPY package*.json /app/
 
-RUN npm install
+RUN npm install -g @angular/cli
 
-RUN npm install @openapitools/openapi-generator-cli -g
+RUN npm install
 
 COPY . /app
 
