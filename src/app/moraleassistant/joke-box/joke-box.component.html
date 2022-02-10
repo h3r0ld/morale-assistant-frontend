@@ -39,37 +39,39 @@
                     <button *ngIf="!singleJoke" mat-icon-button color="primary" (click)="settingsOpened = !settingsOpened">
                         <mat-icon>settings</mat-icon>
                     </button>
-                    <button mat-icon-button color="primary" [matMenuTriggerFor]="shareMenu">
-                        <mat-icon>ios_share</mat-icon>
-                    </button>
-                    <mat-menu #shareMenu="matMenu" (click)="true">
-                        <div class="share-menu" (click)="$event.stopPropagation()">
-                            <div *ngIf="joke.shareURL">
-                                <mat-form-field>
-                                    <mat-label>
-                                        <mat-icon>link</mat-icon>
-                                        URL
-                                    </mat-label>
-                                    <input matInput [value]="joke.shareURL">
-                                    <button mat-icon-button matSuffix [cdkCopyToClipboard]="joke.shareURL" (cdkCopyToClipboardCopied)="onShareCopy('Share link to joke')">
-                                        <mat-icon>content_copy</mat-icon>
-                                    </button>
-                                </mat-form-field>
+                    <ng-container *ngIf="joke.id">
+                        <button mat-icon-button color="primary" [matMenuTriggerFor]="shareMenu">
+                            <mat-icon>ios_share</mat-icon>
+                        </button>
+                        <mat-menu #shareMenu="matMenu" (click)="true">
+                            <div class="share-menu" (click)="$event.stopPropagation()">
+                                <div *ngIf="joke.shareURL">
+                                    <mat-form-field>
+                                        <mat-label>
+                                            <mat-icon>link</mat-icon>
+                                            URL
+                                        </mat-label>
+                                        <input matInput [value]="joke.shareURL">
+                                        <button mat-icon-button matSuffix [cdkCopyToClipboard]="joke.shareURL" (cdkCopyToClipboardCopied)="onShareCopy('Share link to joke')">
+                                            <mat-icon>content_copy</mat-icon>
+                                        </button>
+                                    </mat-form-field>
+                                </div>
+                                <div *ngIf="joke.embedded">
+                                    <mat-form-field>
+                                        <mat-label>
+                                            <mat-icon>extension</mat-icon>
+                                            Embedded
+                                        </mat-label>
+                                        <input matInput [value]="joke.embedded">
+                                        <button mat-icon-button matSuffix [cdkCopyToClipboard]="joke.embedded" (cdkCopyToClipboardCopied)="onShareCopy('Embedded joke')">
+                                            <mat-icon>content_copy</mat-icon>
+                                        </button>
+                                    </mat-form-field>
+                                </div>
                             </div>
-                            <div *ngIf="joke.embedded">
-                                <mat-form-field>
-                                    <mat-label>
-                                        <mat-icon>extension</mat-icon>
-                                        Embedded
-                                    </mat-label>
-                                    <input matInput [value]="joke.embedded">
-                                    <button mat-icon-button matSuffix [cdkCopyToClipboard]="joke.embedded" (cdkCopyToClipboardCopied)="onShareCopy('Embedded joke')">
-                                        <mat-icon>content_copy</mat-icon>
-                                    </button>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                    </mat-menu>
+                        </mat-menu>
+                    </ng-container>
                 </div>
                 <div fxFlex="60" fxLayout="row" fxLayoutAlign="space-between">
                     <mat-divider [vertical]="true"></mat-divider>

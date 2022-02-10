@@ -125,6 +125,12 @@
               "browsers": "ChromeHeadlessCI"
             }
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {
+            "repo": "https://github.com/h3r0ld/h3r0ld.github.io"
+          }
         }
       }
     }
