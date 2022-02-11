@@ -69,7 +69,7 @@ steps:
     changeLogType: 'commitBased'
 
 - script: |
-    npm version patch -m '[skip ci] Release %s'
+    npm version patch -m '[skip ci] New version commit - %s'
     git push
   displayName: Create new patch version
 
