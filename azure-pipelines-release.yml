@@ -54,12 +54,14 @@ steps:
     versionSpec: '16.x'
 
 - script: |
-    npm version patch -m '[skip ci] Release %s'
-  displayName: Create new patch version
-
-- script: |
+    git tag -a $(app.version) -m "Release - $(app.version)"
     git push --tags
   displayName: Git tag and PUSH new version
+
+- script: |
+    npm version patch -m '[skip ci] Release %s'
+    git push
+  displayName: Create new patch version
 
 - task: CmdLine@2
   displayName: Merge master to development
