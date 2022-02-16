@@ -11,6 +11,6 @@
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Close</button>
-  <button mat-raised-button color="primary" [mat-dialog-close]="joke" cdkFocusInitial>Save</button>
+  <button mat-button [mat-dialog-close]="false">Close</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="joke" cdkFocusInitial>Import</button>
 </div>

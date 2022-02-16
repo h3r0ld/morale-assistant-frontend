@@ -8,6 +8,7 @@ import { MoraleAssistantCommonModule } from '../common/moraleassistant-common.mo
 import { CommonModule } from '@angular/common';
 import { JokeEditDialogComponent } from './joke-edit-dialog/joke-edit-dialog.component';
 import { LoginPageComponent } from './login-page/login-page.component';
+import { JokeImportDialogComponent } from './joke-import-dialog/joke-import-dialog.component';
 
 @NgModule({
     declarations: [
@@ -15,6 +16,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
         HomePageComponent,
         JokeEditDialogComponent,
         LoginPageComponent,
+        JokeImportDialogComponent,
     ],
     imports: [
         CommonModule,

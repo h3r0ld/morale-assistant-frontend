@@ -1,0 +1,33 @@
+<h1 mat-dialog-title>Import jokes</h1>
+<form [formGroup]="form" (submit)="importJokes()">
+    <div mat-dialog-content fxLayout="column">
+        <mat-form-field>
+            <mat-label>Source</mat-label>
+            <mat-select formControlName="source" (selectionChange)="selectedSource = $event.value">
+                <mat-option *ngFor="let source of sources" [value]="source">{{source.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div *ngIf="selectedSource">
+            <mat-form-field fxFlexFill>
+                <mat-label>Name</mat-label>
+                <input matInput [value]="selectedSource.name" disabled>
+            </mat-form-field>
+            <mat-form-field fxFlexFill>
+                <mat-label>URL</mat-label>
+                <input matInput [value]="selectedSource.url" disabled>
+            </mat-form-field>
+            <mat-form-field fxFlexFill>
+                <mat-label>Language</mat-label>
+                <input matInput [value]="selectedSource.language" disabled>
+            </mat-form-field>
+        </div>
+        <mat-form-field>
+            <mat-label>How many?</mat-label>
+            <input matInput min="1" type="number" formControlName="count">
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [mat-dialog-close]="false">Close</button>
+        <button mat-raised-button color="primary" type="submit" cdkFocusInitial>Import</button>
+    </div>
+</form>

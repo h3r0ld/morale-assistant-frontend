@@ -22,8 +22,4 @@ export class JokeEditDialogComponent {
       this.title = 'New joke';
     }
   }
-
-  onNoClick() {
-    this.dialogRef.close();
-  }
 }

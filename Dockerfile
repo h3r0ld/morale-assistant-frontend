@@ -1,15 +1,16 @@
 # Stage 1
 FROM node:16 as build
 
+# Need to install JRE, because openapi-generate-cli uses java...
+RUN apt-get update && apt-get -y install default-jre
+
 RUN mkdir -p /app
 
 WORKDIR /app
 
-COPY package*.json /app/
+COPY . /app
 
 RUN npm install
-
-COPY . /app
 
 RUN npm run generate-clients
 
