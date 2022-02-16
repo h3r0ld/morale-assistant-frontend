@@ -8,9 +8,10 @@ import { JokeEditDialogComponent } from '../joke-edit-dialog/joke-edit-dialog.co
 import { JokeDto } from 'src/app/common/client/admin/model/jokeDto';
 import { JokeSearchRequest } from 'src/app/common/client/admin/model/jokeSearchRequest';
 import { JokeControllerService } from 'src/app/common/client/admin/api/jokeController.service';
-import { PageJokeDto } from 'src/app/common/client/admin';
+import { JokeImportControllerService, PageJokeDto } from 'src/app/common/client/admin';
 import { Joke } from 'src/app/common/model/joke';
 import { DomSanitizer } from '@angular/platform-browser';
+import { JokeImportDialogComponent } from '../joke-import-dialog/joke-import-dialog.component';
 
 @Component({
   selector: 'app-joke-management-page',
@@ -39,6 +40,7 @@ export class JokeManagementPageComponent implements AfterViewInit {
 
   constructor(
     private jokeService: JokeControllerService,
+    private jokeImportService: JokeImportControllerService,
     private dialog: MatDialog,
     private domSanitizer: DomSanitizer,
   ) {
@@ -78,6 +80,20 @@ export class JokeManagementPageComponent implements AfterViewInit {
     });
   }
 
+  importJokes() {
+    this.jokeImportService.getJokeSources().subscribe(sources => {
+      console.log(sources);
+      this.dialog.open(JokeImportDialogComponent, {
+        width: '20em',
+        data: sources
+      }).afterClosed().subscribe(success => {
+        if (success) {
+          this.searchJokes();
+        }
+      });
+    });
+  }
+
   getJoke(openedJoke: JokeDto) {
     if (this.expandedElement === openedJoke) {
       this.expandedElement = null;
@@ -104,7 +120,7 @@ export class JokeManagementPageComponent implements AfterViewInit {
     this.jokeService.deleteJoke(new Set([joke.id])).subscribe(this.searchJokes);
   }
 
-  private openJokeDialog(joke: JokeDto | undefined = undefined) {
+  private openJokeDialog(joke?: JokeDto) {
     return this.dialog.open(JokeEditDialogComponent, {
       width: '600px',
       data: { joke }

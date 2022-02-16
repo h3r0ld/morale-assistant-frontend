@@ -70,6 +70,10 @@ export class JokeBoxComponent implements OnInit {
   }
 
   getNextJoke() {
+    if (this.soundBar) {
+      this.soundBar.stop();
+    }
+
     this.started = true;
     this.stopCountdown();
     this.joke.soundFile = null;
