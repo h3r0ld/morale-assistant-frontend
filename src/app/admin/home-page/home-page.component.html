@@ -8,11 +8,14 @@
             </button>
             <h1>Morale Assistant Admin</h1>
         </div>
-        <div fxLayout="row" fxLayoutAlign="end center">
+        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="0.5em">
             <div *ngIf="currentUser">
                 {{ currentUser.username }}
             </div>
             <mat-icon>account_circle</mat-icon>
+            <button mat-icon-button (click)="changePassword()">
+                <mat-icon>edit</mat-icon>
+            </button>
             <button mat-button (click)="logout()">
                 Logout
             </button>

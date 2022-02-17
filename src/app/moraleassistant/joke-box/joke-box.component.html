@@ -26,16 +26,15 @@
             </ng-template>
         </mat-card-content>
         <mat-card-actions *ngIf="started" fxLayout="column" fxLayoutGap="5px">
-            <div fxLayout="row" fxLayoutAlign="space-between center">
-                <app-sound-bar fxFlex="30" 
-                    [sound]="joke.soundFile" 
-                    (soundLoaded)="onSoundLoaded()"
-                    (soundStarted)="stopCountdown()"
-                    (soundStopped)="stopCountdown()"
-                    (soundEnded)="onSoundEnded()">
-                </app-sound-bar>
-                <div fxFlex="10" fxLayout="row">
-                    <mat-divider [vertical]="true"></mat-divider>
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+                <div fxLayout="row wrap">
+                    <app-sound-bar
+                        [sound]="joke.soundFile" 
+                        (soundLoaded)="onSoundLoaded()"
+                        (soundStarted)="stopCountdown()"
+                        (soundStopped)="stopCountdown()"
+                        (soundEnded)="onSoundEnded()">
+                    </app-sound-bar>
                     <button *ngIf="!singleJoke" mat-icon-button color="primary" (click)="settingsOpened = !settingsOpened">
                         <mat-icon>settings</mat-icon>
                     </button>
@@ -73,8 +72,7 @@
                         </mat-menu>
                     </ng-container>
                 </div>
-                <div fxFlex="60" fxLayout="row" fxLayoutAlign="space-between">
-                    <mat-divider [vertical]="true"></mat-divider>
+                <div fxLayout="row" fxLayoutAlign="space-between">
                     <div>
                         <button *ngIf="!singleJoke; else seeMoreBlock" mat-raised-button color="primary" (click)="getNextJoke()">
                             Next One {{timeLeft > 0 ? 'in ' + timeLeft + ' ' : ''}}
@@ -91,7 +89,7 @@
             </div>
             <div *ngIf="settingsOpened && !singleJoke">
                 <mat-divider></mat-divider>
-                <div class="settings" fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="start center">
+                <div class="settings" fxLayout="row wrap" fxLayoutGap="1em grid" fxLayoutAlign="start center">
                     <div>
                         <mat-label>Language: </mat-label>
                         <mat-button-toggle-group [(value)]="selectedLanguage">
@@ -103,14 +101,16 @@
                             </mat-button-toggle>
                         </mat-button-toggle-group>
                     </div>
-                    <mat-checkbox [(ngModel)]="autoplay">
-                        Autoplay
-                    </mat-checkbox>
-                    <mat-form-field *ngIf="autoplay">
-                        <mat-label>Delay between jokes</mat-label>
-                        <input matInput type="number" min="3" [(ngModel)]="maxTimeLeft">
-                        <span matSuffix>s</span>
-                    </mat-form-field>
+                    <div fxLayout="row" fxLayoutGap="1em" fxLayoutAlign="center center">
+                        <mat-checkbox [(ngModel)]="autoplay">
+                            Autoplay
+                        </mat-checkbox>
+                        <mat-form-field *ngIf="autoplay">
+                            <mat-label>Delay between jokes</mat-label>
+                            <input matInput type="number" min="3" [(ngModel)]="maxTimeLeft">
+                            <span matSuffix>s</span>
+                        </mat-form-field>
+                    </div>
                 </div>
             </div>
         </mat-card-actions>

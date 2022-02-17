@@ -9,6 +9,8 @@ import { CommonModule } from '@angular/common';
 import { JokeEditDialogComponent } from './joke-edit-dialog/joke-edit-dialog.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { JokeImportDialogComponent } from './joke-import-dialog/joke-import-dialog.component';
+import { ChangePasswordDialogComponent } from './change-password-dialog/change-password-dialog.component';
+import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 
 @NgModule({
     declarations: [
@@ -17,6 +19,7 @@ import { JokeImportDialogComponent } from './joke-import-dialog/joke-import-dial
         JokeEditDialogComponent,
         LoginPageComponent,
         JokeImportDialogComponent,
+        ChangePasswordDialogComponent,
     ],
     imports: [
         CommonModule,
@@ -24,6 +27,7 @@ import { JokeImportDialogComponent } from './joke-import-dialog/joke-import-dial
         MaterialModule,
         MoraleAssistantCommonModule,
         AdminRoutingModule,
+        MatPasswordStrengthModule,
     ],
     exports: [
         JokeManagementPageComponent,
