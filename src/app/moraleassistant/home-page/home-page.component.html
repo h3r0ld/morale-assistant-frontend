@@ -1,10 +1,13 @@
 <div class="morale-assistant" fxLayout="column" fxLayoutAlign="center center">
-    <div class="title-section" fxLayout="column" fxLayoutAlign="start center" fxFlex="30">
-        <h1>Morale Assistant</h1>
-        <h2>Your personal work morale assistant!</h2>
-        <h2>Make productive work great again!</h2>
+    <div class="title-section" fxLayout="column" fxLayoutAlign="start center">
+        <h2>Morale Assistant</h2>
+        <h3>Your personal work morale assistant!</h3>
+        <h3>Make productive work great again!</h3>
     </div>
-    <div class="introduction-section" fxLayoutAlign="center center" fxFlex="10">
+    <div class="joke-section" fxLayoutAlign="center center" fxFlex="50">
+        <app-joke-box></app-joke-box>
+    </div>
+    <div class="introduction-section" fxLayoutAlign="center center">
         <ol>
             <li>Are you tired of you work and life? Or you just wanna have some extra fun?</li>
             <li>Let's hear some jokes to lighten you up!</li>
@@ -13,10 +16,8 @@
             <li>Profit!</li>
         </ol>
     </div>
-    <div class="joke-section" fxLayoutAlign="center center" fxFlex="50">
-        <app-joke-box></app-joke-box>
-    </div>
-    <div class="credits-section" fxLayoutAlign="center end" fxFlex="10">
-        {{title}} v{{version}} | Credits: Kristóf Herold
+    <div class="credits-section" fxLayout="row wrap" fxLayoutAlign="center end" fxLayoutGap="0.5em">
+        <span>{{title}} v{{version}}</span>
+        <span>Credits: Kristóf Herold</span>
     </div>
 </div>
