@@ -1,3 +1,5 @@
+@import './src/styles/theme.scss';
+
 .joke-box {
     padding: 20px;
 }
@@ -9,14 +11,16 @@
 }
 
 .joke-box-card mat-card-content {
-    background-color: #9FA8DA;
+    background-color: mat-color($mat-primary, lighter);
+    color: mat-color($mat-primary, darker);
     border-radius: 4px 4px 0px 0px;
     margin-bottom: 0px;
     padding: 5px;
 }
 
 .joke-box-card mat-card-actions {
-    background-color: #C5CAE9;
+    background-color: mat-color($mat-primary, main);
+    color: mat-color($mat-primary, lighter);
     padding: 10px;
     border-radius: 0px 0px 4px 4px;
     margin: 0px;
@@ -28,7 +32,7 @@
 }
 
 .mat-button-toggle-checked {
-    background-color: #7787e4;
+    background-color: mat-color($mat-accent, main);
 }
 
 .settings {
@@ -38,4 +42,6 @@
 .share-menu {
     padding-right: 10px;
     padding-left: 10px;
+
+    color: $light-primary-text;
 }

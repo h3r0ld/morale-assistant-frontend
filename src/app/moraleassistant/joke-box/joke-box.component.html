@@ -1,27 +1,34 @@
 <div class="joke-box">
-    <mat-card class="joke-box-card">
+    <mat-card class="joke-box-card mat-elevation-z8">
         <ngx-spinner name="spinner" type="pacman" [fullScreen]="false" size="small"></ngx-spinner>
         
-        <mat-card-content>
-            <div *ngIf="started; else startBlock" class="joke-text">{{joke.text}}</div>
+        <mat-card-content class="joke-text">
+            <div *ngIf="started; else startBlock">
+                {{joke.text}}
+            </div>
             <ng-template #startBlock>
-                <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
-                    Choose language: 
-                    <mat-button-toggle-group [(value)]="selectedLanguage">
-                        <mat-button-toggle [value]=Language.Hu>
-                            <span class="flag-icon flag-icon-hu"></span>
-                        </mat-button-toggle>
-                        <mat-button-toggle [value]=Language.En>
-                            <span class="flag-icon flag-icon-gb"></span>
-                        </mat-button-toggle>
-                    </mat-button-toggle-group>
-                    <mat-checkbox
-                        [(ngModel)]="autoplay">
-                        Autoplay
-                    </mat-checkbox>
-                    <button mat-raised-button color="primary" (click)="getNextJoke()">
-                        Start laughing!
+                <div fxLayout="row" fxLayoutAlign="center space-between" fxLayoutGap="5px" fxFlexFill>
+                    <button color="primary" style="width: 50%;" mat-flat-button (click)="start(Language.Hu)">
+                        <span class="flag-icon flag-icon-hu" style="height: 90px; width: 25%;"></span>
                     </button>
+                    <button color="primary" style="width: 50%;" mat-flat-button (click)="start(Language.En)">
+                        <span class="flag-icon flag-icon-gb" style="height: 90px; width: 25%"></span>
+                    </button>
+                        <!-- <mat-button-toggle-group [(value)]="selectedLanguage">
+                            <mat-button-toggle [value]=Language.Hu>
+                                <span class="flag-icon flag-icon-hu"></span>
+                            </mat-button-toggle>
+                            <mat-button-toggle [value]=Language.En>
+                                <span class="flag-icon flag-icon-gb"></span>
+                            </mat-button-toggle>
+                        </mat-button-toggle-group>
+                        <mat-checkbox
+                            [(ngModel)]="autoplay">
+                            Autoplay
+                        </mat-checkbox>
+                        <button mat-raised-button color="accent" (click)="getNextJoke()">
+                            Start laughing!
+                        </button> -->
                 </div>
             </ng-template>
         </mat-card-content>
@@ -35,11 +42,11 @@
                         (soundStopped)="stopCountdown()"
                         (soundEnded)="onSoundEnded()">
                     </app-sound-bar>
-                    <button *ngIf="!singleJoke" mat-icon-button color="primary" (click)="settingsOpened = !settingsOpened">
+                    <button *ngIf="!singleJoke" mat-icon-button (click)="settingsOpened = !settingsOpened">
                         <mat-icon>settings</mat-icon>
                     </button>
                     <ng-container *ngIf="joke.id">
-                        <button mat-icon-button color="primary" [matMenuTriggerFor]="shareMenu">
+                        <button mat-icon-button [matMenuTriggerFor]="shareMenu">
                             <mat-icon>ios_share</mat-icon>
                         </button>
                         <mat-menu #shareMenu="matMenu" (click)="true">
@@ -74,12 +81,12 @@
                 </div>
                 <div fxLayout="row" fxLayoutAlign="space-between">
                     <div>
-                        <button *ngIf="!singleJoke; else seeMoreBlock" mat-raised-button color="primary" (click)="getNextJoke()">
+                        <button *ngIf="!singleJoke; else seeMoreBlock" mat-raised-button color="accent" (click)="getNextJoke()">
                             Next One {{timeLeft > 0 ? 'in ' + timeLeft + ' ' : ''}}
                             <mat-icon aria-hidden="false">sentiment_satisfied_alt</mat-icon>
                         </button>
                         <ng-template #seeMoreBlock>
-                            <button mat-raised-button color="primary" [routerLink]="'/'">
+                            <button mat-raised-button color="accent" [routerLink]="'/'">
                                 See more!
                                 <mat-icon aria-hidden="false">explore</mat-icon>
                             </button>
@@ -105,7 +112,7 @@
                         <mat-checkbox [(ngModel)]="autoplay">
                             Autoplay
                         </mat-checkbox>
-                        <mat-form-field *ngIf="autoplay">
+                        <mat-form-field *ngIf="autoplay" appearance="outline">
                             <mat-label>Delay between jokes</mat-label>
                             <input matInput type="number" min="3" [(ngModel)]="maxTimeLeft">
                             <span matSuffix>s</span>

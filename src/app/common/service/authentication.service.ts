@@ -7,8 +7,6 @@ import { User } from '../model/user';
 
 @Injectable()
 export class AuthenticationService {
-  public user: Observable<User>;
-
   private userSubject: BehaviorSubject<User>;
 
   constructor(
@@ -16,26 +14,37 @@ export class AuthenticationService {
       private adminConfiguration: AdminConfiguration,
       private adminUserService: AdminUserControllerService,
   ) {
-    this.userSubject = new BehaviorSubject<UserDetails>(JSON.parse(localStorage.getItem('user')));
-    this.user = this.userSubject.asObservable();
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    this.userSubject = new BehaviorSubject<User>(user);
+
+    this.userSubject.subscribe(userValue => {
+      if (userValue) {
+        localStorage.setItem('user', JSON.stringify(user));
+      } else {
+        localStorage.removeItem('user');
+      }
+
+      this.adminConfiguration.credentials.basicAuth = userValue?.authdata;
+    });
   }
 
-  public get userValue(): UserDetails {
+  public get user(): User {
     return this.userSubject.value;
   }
 
   login(username: string, password: string) {
-    this.adminConfiguration.credentials.basicAuth = window.btoa(`${username}:${password}`);
+    const authdata = window.btoa(`${username}:${password}`);
 
+    this.adminConfiguration.credentials.basicAuth = authdata;
     return this.adminUserService.login()
       .pipe(
-        map(user => {
-          localStorage.setItem('user', JSON.stringify(user));
-          this.userSubject.next(user);
-          return user;
+        map(userDetails => {
+          this.userSubject.next({...userDetails, ...{ authdata }});
+          return this.userSubject.value;
         }),
         catchError(_ => {
-          this.adminConfiguration.credentials.basicAuth = undefined;
+          this.clearUserData();
           return undefined;
         })
     );
@@ -44,7 +53,7 @@ export class AuthenticationService {
   changePassword(changePassword: ChangePasswordDto) {
     return this.adminUserService.changePassword(changePassword).pipe(
       map(_ => {
-        return this.login(this.userValue.username, changePassword.newPassword);
+        return this.login(this.user.username, changePassword.newPassword);
       }),
       catchError(_ => {
         return undefined;
@@ -53,9 +62,11 @@ export class AuthenticationService {
   }
 
   logout() {
-    localStorage.removeItem('user');
-    this.adminConfiguration.credentials.basicAuth = undefined;
-    this.userSubject.next(null);
+    this.clearUserData();
     this.router.navigate(['/']);
+  }
+
+  private clearUserData() {
+    this.userSubject.next(null);
   }
 }

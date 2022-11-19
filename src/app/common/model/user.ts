@@ -1,5 +1,5 @@
-import { GrantedAuthority } from "../client/admin/model/grantedAuthority";
-import { UserDetails } from "../client/admin/model/userDetails";
+import { GrantedAuthority } from '../client/admin/model/grantedAuthority';
+import { UserDetails } from '../client/admin/model/userDetails';
 
 export class User implements UserDetails {
     enabled?: boolean;

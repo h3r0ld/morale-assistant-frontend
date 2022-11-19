@@ -18,7 +18,7 @@ export class HomePageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.currentUser = this.authenticationService.userValue;
+    this.currentUser = this.authenticationService.user;
   }
 
   changePassword() {

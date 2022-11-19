@@ -7,6 +7,6 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent {
-  title = "Morale Assistant";
+  title = 'Morale Assistant';
   version = environment.appVersion;
 }
