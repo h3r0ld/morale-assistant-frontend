@@ -64,7 +64,6 @@ export class SoundBarComponent implements OnChanges {
   }
 
   play() {
-    console.log('Playing!');
     if (this.sound) {
       this.sound.play();
       this.state = PlayState.PLAYING;
@@ -73,7 +72,6 @@ export class SoundBarComponent implements OnChanges {
   }
 
   stop() {
-    console.log('Stopping!');
     if (this.sound) {
       this.sound.pause();
       this.sound.currentTime = 0;
@@ -83,7 +81,6 @@ export class SoundBarComponent implements OnChanges {
   }
 
   pause() {
-    console.log('Pausing!');
     if (this.sound) {
       this.sound.pause();
       this.state = PlayState.PAUSED;
@@ -91,7 +88,6 @@ export class SoundBarComponent implements OnChanges {
   }
 
   replay() {
-    console.log('Replay!');
     this.stop();
     this.play();
   }

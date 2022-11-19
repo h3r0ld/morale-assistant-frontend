@@ -13,11 +13,11 @@
                 {{ currentUser.username }}
             </div>
             <mat-icon>account_circle</mat-icon>
-            <button mat-icon-button (click)="changePassword()">
+            <button mat-icon-button (click)="changePassword()" matTooltip="Change password">
                 <mat-icon>edit</mat-icon>
             </button>
-            <button mat-button (click)="logout()">
-                Logout
+            <button mat-icon-button (click)="logout()" matTooltip="Logout">
+                <mat-icon>logout</mat-icon>
             </button>
         </div>
     </mat-toolbar>

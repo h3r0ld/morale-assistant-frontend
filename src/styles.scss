@@ -1,9 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
-html, body { height: 100%; }
-body { 
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif; 
-}
-
 $flag-icon-css-path: '~flag-icon-css/flags' !default;
 @import "~flag-icon-css/sass/flag-icon";
+@import './styles/theme.scss';
+
+// -------------------------------------------------------------
+// Variables
+
+// Colors
+$g1: #5961F9;
+$g2: #2AFADF;
+$g3: #ffd861;
+$text: #204754;
+
+html, body { 
+    min-height: 100%; 
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    width: 100%;
+    background-image: linear-gradient(180deg, $g1 0%, $g2 40%, $g3 100%);
+    background-repeat: no-repeat;
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+    font-weight: 100;
+}

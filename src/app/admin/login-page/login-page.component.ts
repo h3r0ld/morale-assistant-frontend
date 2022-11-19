@@ -19,7 +19,7 @@ export class LoginPageComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private formBuilder: FormBuilder,
   ) {
-    if (this.authenticationService.userValue) {
+    if (this.authenticationService.user) {
       this.router.navigate(['/admin']);
     }
   }

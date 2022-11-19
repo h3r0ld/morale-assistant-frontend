@@ -55,7 +55,6 @@ export class JokeBoxComponent implements OnInit {
 
   onSoundEnded() {
     if (this.autoplay) {
-      console.log('Sound ended, getting next joke... ');
       this.timeLeft = this.maxTimeLeft || 10;
 
       if (!this.countdown) {
@@ -82,9 +81,7 @@ export class JokeBoxComponent implements OnInit {
   }
 
   stopCountdown() {
-    console.log('Stopping countdown...');
     if (this.countdown) {
-      console.log('Clearing countdown interval...');
       clearInterval(this.countdown);
       this.countdown = null;
     }
@@ -103,6 +100,11 @@ export class JokeBoxComponent implements OnInit {
     }
   }
 
+  start(language: JokeDto.LanguageEnum) {
+    this.selectedLanguage = language;
+    this.getNextJoke();
+  }
+
   private handleJokeResponse(joke: JokeDto) {
     this.joke = joke;
     this.joke.shareURL = `${window.location.origin}/joke/${joke.id}`;
@@ -113,7 +115,6 @@ export class JokeBoxComponent implements OnInit {
     if (this.autoplay && this.soundBar) {
       this.soundBar.replay();
     } else if(this.soundBar) {
-      console.log('Autoplay not set! ', this.autoplay);
       this.soundBar.stop();
     }
   }

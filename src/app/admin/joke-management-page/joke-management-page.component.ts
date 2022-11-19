@@ -82,7 +82,6 @@ export class JokeManagementPageComponent implements AfterViewInit {
 
   importJokes() {
     this.jokeImportService.getJokeSources().subscribe(sources => {
-      console.log(sources);
       this.dialog.open(JokeImportDialogComponent, {
         width: '20em',
         data: sources

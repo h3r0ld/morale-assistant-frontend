@@ -13,8 +13,13 @@ const routes: Routes = [
     { path: 'joke-box', component: JokeBoxComponent },
     { path: 'joke-box/:id', component: JokeBoxComponent },
     { path: 'login', component: LoginPageComponent },
-    { path: 'admin', component: AdminHomePage, canActivate: [AuthGuard], loadChildren: () => import(`./admin/admin.module`).then(m => m.AdminModule) },
-    
+    {
+        path: 'admin',
+        component: AdminHomePage,
+        canActivate: [AuthGuard],
+        loadChildren: () => import(`./admin/admin.module`).then(m => m.AdminModule)
+    },
+
     // Redirect to home
     { path: '**', redirectTo: '' },
 ];
