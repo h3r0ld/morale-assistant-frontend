@@ -10,7 +10,7 @@ WORKDIR /app
 
 COPY . /app
 
-RUN npm ci
+RUN npm install
 
 RUN npm run generate-clients
 
